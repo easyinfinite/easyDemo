@@ -1,0 +1,9 @@
+server:
+  port: 9999
+tencent:
+  sms:
+    appid:
+    appkey:
+    templateId:
+    smsSign:
+    expireTime: 5

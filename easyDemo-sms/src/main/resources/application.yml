@@ -7,3 +7,12 @@ tencent:
     templateId:
     smsSign:
     expireTime: 5
+aliyun:
+  info:
+    product:
+    domain:
+    accessKeyId:
+    accessKeySecret:
+  sms:
+    templateCode:
+    smsSign:

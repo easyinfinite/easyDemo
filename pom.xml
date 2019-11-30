@@ -5,6 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>easyDemo-sms</module>
+        <module>easyDemo-oss</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

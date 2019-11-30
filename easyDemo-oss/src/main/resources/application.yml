@@ -9,3 +9,9 @@ aliyun:
     bucketName:
     backUrl:
     fileName:
+qiniu:
+  info:
+    accessKeyId: MvSrvGNLo958z9tv3m_RxUlUbdZenoJyT2W7ua6N
+    accessKeySecret: uRs_60-IUBMdkkR-54oeqf05NJdHbahLQ_e-YRa6
+    bucketName: chenyunxuan
+    path: http://photo.chenyunxuan.com/

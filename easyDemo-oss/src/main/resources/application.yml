@@ -1,0 +1,11 @@
+server:
+  port: 9998
+aliyun:
+  info:
+    accessKeyId:
+    accessKeySecret:
+  oss:
+    endpoint:
+    bucketName:
+    backUrl:
+    fileName:

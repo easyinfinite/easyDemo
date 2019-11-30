@@ -1,4 +1,4 @@
-package sms.tengxun;
+package com.sms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;

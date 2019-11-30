@@ -1,10 +1,10 @@
-package sms.tengxun.service;
+package com.sms.service;
 
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
+import com.sms.entity.TencentSmsModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sms.tengxun.entity.TencentSmsModel;
 
 /**
  * 功能描述: 发送

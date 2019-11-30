@@ -1,4 +1,4 @@
-package sms.tengxun.entity;
+package com.sms.entity;
 
 import lombok.Data;
 

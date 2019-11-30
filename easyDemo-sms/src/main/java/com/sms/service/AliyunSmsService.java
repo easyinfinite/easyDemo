@@ -1,4 +1,4 @@
-package sms.tengxun.service;
+package com.sms.service;
 
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
@@ -9,10 +9,10 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.sms.entity.SendModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sms.tengxun.entity.AliyunSmsModel;
-import sms.tengxun.entity.SendModel;
+import com.sms.entity.AliyunSmsModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

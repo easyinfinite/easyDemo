@@ -35,14 +35,4 @@ public class QiniuConfig implements Serializable {
      */
     @Value("${qiniu.info.path}")
     private String path;
-//    /**
-//     * 返回文件地址前缀
-//     */
-//    @Value("${aliyun.oss.backUrl}")
-//    private String backUrl;
-//    /**
-//     * 文件夹名称
-//     */
-//    @Value("${aliyun.oss.fileName}")
-//    private String fileName;
 }

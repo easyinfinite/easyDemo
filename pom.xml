@@ -6,6 +6,7 @@
     <modules>
         <module>easyDemo-sms</module>
         <module>easyDemo-oss</module>
+        <module>easyDemo-staging</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

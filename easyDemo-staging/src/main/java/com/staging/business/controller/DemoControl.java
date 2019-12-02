@@ -1,6 +1,7 @@
 package com.staging.business.controller;
 
 
+import com.staging.base.aspect.Runtime;
 import com.staging.base.result.R;
 import com.staging.base.util.ResultUtil;
 import com.staging.business.entity.User;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/demo")
 public class DemoControl {
 
+    @Runtime
     @GetMapping("user")
     public R<User> getUser() {
         User u = new User();

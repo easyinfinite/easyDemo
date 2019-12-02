@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.oss.qiniuoss.entity.QiniuConfig;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
@@ -27,6 +28,14 @@ public class QiniuService {
     private QiniuConfig config;
 
 
+    /**
+     * 功能描述: 七牛上传文件
+     *
+     * @param: [file, fileName]
+     * @return: com.oss.qiniuoss.sevice.QiniuService
+     * @auther: chenyunxuan
+     * @date: 2019-12-02 16:27
+     */
     public String uploadQiniuFiles(FileInputStream file, String fileName) {
         // 构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(Region.autoRegion());
@@ -54,6 +63,27 @@ public class QiniuService {
             e.printStackTrace();
         }
         return "";
+    }
+
+    /**
+     * 功能描述:删除文件
+     *
+     * @param: [keys]
+     * @return: com.oss.qiniuoss.sevice.QiniuService
+     * @auther: chenyunxuan
+     * @date: 2019-12-02 16:28
+     */
+    public String deleteQiniuFiles(String key) {
+        Auth auth = Auth.create(config.getAccessKeyId(), config.getAccessKeySecret());
+        Configuration cfg = new Configuration(Region.autoRegion());
+        BucketManager bucketMgr = new BucketManager(auth, cfg);
+        try {
+            Response response = bucketMgr.delete(config.getBucketName(), key);
+            return response.getInfo();
+        } catch (QiniuException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

@@ -65,4 +65,10 @@ public class QiniuFilesControl {
 //            OutDataUtil.writeFailJSON(response, "上传失败", null);
         }
     }
+
+    @PostMapping(value = "/deleteFile")
+    public void filesUpload(String fileName) {
+        qiniuService.deleteQiniuFiles(fileName);
+    }
+
 }

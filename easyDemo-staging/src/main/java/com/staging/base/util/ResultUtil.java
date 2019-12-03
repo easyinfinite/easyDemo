@@ -16,7 +16,6 @@ public class ResultUtil<T> {
 
     private static Map<Integer, String> messageMap = new HashMap<>();
     private int successCode = 200;
-    private String successMessage = "成功";
 
     //初始化状态码与文字说明
     static {
@@ -83,7 +82,7 @@ public class ResultUtil<T> {
     private ResultUtil() {
         r = new R<>();
         r.setSuccess(true);
-        r.setMessage(successMessage);
+        r.setMessage("成功");
         r.setCode(successCode);
     }
 

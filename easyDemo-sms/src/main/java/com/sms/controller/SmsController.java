@@ -33,7 +33,7 @@ public class SmsController {
      *
      * @param: [mobile]
      * @return: sms.tengxun.controller.SmsController
-     * @auther: chenyunxuan
+     * @author: chenyunxuan
      * @date: 2019-11-29 18:31
      */
     @GetMapping("{mobile}")
@@ -47,7 +47,7 @@ public class SmsController {
      *
      * @param: [mobile]
      * @return: sms.tengxun.controller.SmsController
-     * @auther: chenyunxuan
+     * @author: chenyunxuan
      * @date: 2019-11-29 18:31
      */
     @GetMapping("/aliyun/{mobile}")

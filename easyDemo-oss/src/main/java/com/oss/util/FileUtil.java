@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * oss 工具类
  *
- * @auther: chenyunxuan
+ * @author: chenyunxuan
  * @date: 2019-11-30 17:58
  */
 public class FileUtil {
@@ -16,7 +16,7 @@ public class FileUtil {
      *
      * @param: []
      * @return: com.oss.util.FileUtil
-     * @auther: chenyunxuan
+     * @author: chenyunxuan
      * @date: 2019-12-02 15:25
      */
     public static String getRandomFileName() {
@@ -41,7 +41,7 @@ public class FileUtil {
      *
      * @param: [contentType, allowTypes]
      * @return: com.oss.util.FileUtil
-     * @auther: chenyunxuan
+     * @author: chenyunxuan
      * @date: 2019-12-02 15:25
      */
     public static boolean isValid(String contentType, String... allowTypes) {
@@ -61,7 +61,7 @@ public class FileUtil {
      *
      * @param: [contentType]
      * @return: com.oss.util.FileUtil
-     * @auther: chenyunxuan
+     * @author: chenyunxuan
      * @date: 2019-12-02 15:45
      */
     public static boolean isValid(String contentType) {

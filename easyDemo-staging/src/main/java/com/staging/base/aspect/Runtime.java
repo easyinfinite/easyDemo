@@ -12,7 +12,7 @@ import java.lang.annotation.*;
  *
  * @param:
  * @return: com.staging.base.aspect.Runtime
- * @auther: chenyunxuan
+ * @author: chenyunxuan
  * @date: 2019-12-02 21:51
  */
 public @interface Runtime {

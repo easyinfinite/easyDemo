@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 public class StagingApplication extends WebMvcConfigurationSupport {
 
     public static void main(String[] args) {
+//        System.setProperty("Log4jContextSelector", "org.apache.logging.log4j.core.async.AsyncLoggerContextSelector");
         SpringApplication.run(StagingApplication.class, args);
     }
 }

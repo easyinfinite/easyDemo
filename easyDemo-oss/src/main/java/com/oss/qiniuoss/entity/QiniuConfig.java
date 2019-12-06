@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 七牛云oss配置
  *
- * @auther: chenyunxuan
+ * @author: chenyunxuan
  * @date: 2019-11-30 17:41
  */
 @Data

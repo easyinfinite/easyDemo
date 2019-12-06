@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @param:
  * @return: sms.tengxun.entity.SendModel
- * @auther: chenyunxuan
+ * @author: chenyunxuan
  * @date: 2019-11-29 19:34
  */
 @Data

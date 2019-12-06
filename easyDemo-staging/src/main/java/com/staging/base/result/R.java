@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  *
  * 功能描述: 返回类R
- * @auther: chenyunxuan
+ * @author: chenyunxuan
  * @date: 2019-12-02 18:29
  */
 @Data

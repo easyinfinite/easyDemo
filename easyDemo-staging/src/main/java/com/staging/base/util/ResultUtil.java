@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 功能描述: 返回类封装
  *
- * @auther: chenyunxuan
+ * @author: chenyunxuan
  * @date: 2019-12-02 18:28
  */
 public class ResultUtil<T> {

@@ -15,7 +15,7 @@ import java.util.Date;
 
 /**
  * alioss 工具类
- * @auther: chenyunxuan
+ * @author: chenyunxuan
  * @date: 2019-11-30 17:58
  */
 @Component
@@ -51,7 +51,7 @@ public class AliOssService {
      *
      * @param: [key, stream, size]
      * @return: com.oss.alioss.util.UploadOss
-     * @auther: chenyunxuan
+     * @author: chenyunxuan
      * @date: 2019-11-30 17:56
      */
     public String uploadFile(String key, InputStream stream, long size) throws Exception {

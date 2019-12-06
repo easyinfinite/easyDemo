@@ -5,7 +5,7 @@ package com.oss.util;
  *
  * @param:
  * @return: com.oss.util.Constant
- * @auther: chenyunxuan
+ * @author: chenyunxuan
  * @date: 2019-12-02 15:28
  */
 public final class Constant {
@@ -15,7 +15,7 @@ public final class Constant {
      *
      * @param:
      * @return: com.oss.util.Constant.suffix
-     * @auther: chenyunxuan
+     * @author: chenyunxuan
      * @date: 2019-12-02 15:32
      */
     public interface suffix {
@@ -43,7 +43,7 @@ public final class Constant {
      *
      * @param: []
      * @return: com.oss.util.Constant
-     * @auther: chenyunxuan
+     * @author: chenyunxuan
      * @date: 2019-12-02 15:38
      */
     public static String[] allSuffixSupport() {

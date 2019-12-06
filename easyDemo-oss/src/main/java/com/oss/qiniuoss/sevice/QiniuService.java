@@ -18,7 +18,7 @@ import java.io.FileInputStream;
 /**
  * qiniu 工具类
  *
- * @auther: chenyunxuan
+ * @author: chenyunxuan
  * @date: 2019-11-30 17:58
  */
 @Component
@@ -33,7 +33,7 @@ public class QiniuService {
      *
      * @param: [file, fileName]
      * @return: com.oss.qiniuoss.sevice.QiniuService
-     * @auther: chenyunxuan
+     * @author: chenyunxuan
      * @date: 2019-12-02 16:27
      */
     public String uploadQiniuFiles(FileInputStream file, String fileName) {
@@ -70,7 +70,7 @@ public class QiniuService {
      *
      * @param: [keys]
      * @return: com.oss.qiniuoss.sevice.QiniuService
-     * @auther: chenyunxuan
+     * @author: chenyunxuan
      * @date: 2019-12-02 16:28
      */
     public String deleteQiniuFiles(String key) {

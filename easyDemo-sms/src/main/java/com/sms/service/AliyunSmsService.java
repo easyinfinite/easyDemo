@@ -22,7 +22,7 @@ import java.util.Date;
  *
  * @param:
  * @return: sms.tengxun.service.AliyunSmsService
- * @auther: chenyunxuan
+ * @author: chenyunxuan
  * @date: 2019-11-29 19:43
  */
 @Component
@@ -42,7 +42,7 @@ public class AliyunSmsService {
      *
      * @param: [sendModel]
      * @return: sms.tengxun.service.AliyunSmsService
-     * @auther: chenyunxuan
+     * @author: chenyunxuan
      * @date: 2019-11-29 19:39
      */
     public SendSmsResponse sendSms(SendModel sendModel) throws ClientException {

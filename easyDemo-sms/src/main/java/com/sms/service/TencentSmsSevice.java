@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  *
  * @param:
  * @return: sms.tengxun.SendSMSUtils
- * @auther: chenyunxuan
+ * @author: chenyunxuan
  * @date: 2019-11-29 18:01
  */
 @Component
@@ -26,7 +26,7 @@ public class TencentSmsSevice {
      * 功能描述:  这里的签名"腾讯云"只是一个示例，真实的签名需要在短信控制台中申请，另外签名参数使用的是`签名内容`，而不是`签名ID`
      *
      * @return: sms.tengxun.SendSMSUtils
-     * @auther: chenyunxuan
+     * @author: chenyunxuan
      * @date: 2019-11-29 18:00
      */
     public String sendCode(String phoneNumber) {

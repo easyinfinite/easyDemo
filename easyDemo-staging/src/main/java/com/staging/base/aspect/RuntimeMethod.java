@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @param:
  * @return: com.staging.base.aspect.RuntimeMethod
- * @auther: chenyunxuan
+ * @author: chenyunxuan
  * @date: 2019-12-02 21:52
  */
 @Aspect
@@ -41,7 +41,7 @@ public class RuntimeMethod {
      *
      * @param: [joinPoint]
      * @return: com.staging.base.aspect.RuntimeMethod
-     * @auther: chenyunxuan
+     * @author: chenyunxuan
      * @date: 2019-12-02 22:07
      */
     @Around("aopPoint()")

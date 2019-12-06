@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--monitorInterval可动态配置日志文件的刷新频率最小为5秒-->
+<Configuration status="WARN" monitorInterval="30">
+    <!--日志输出级别-->
+    <!--all<trace<debug<info<warn<error<fatal<off-->
+
+    <!--单个过滤器,输出error,fatal-->
+    <!--<ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />-->
+
+    <!--输出warn,info,debug,trace-->
+    <!--<ThresholdFilter level="error" onMatch="DENY" onMismatch="ACCEPT" />-->
+
+    <!--该级别输出info.warn.error,重点在于NEUTRAL-->
+    <!--<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>-->
+    <!--<ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>-->
+    <Properties>
+        <!-- 设置日志文件的目录名称 -->
+        <property name="LOG_PATH" value="log"/>
+        <!-- 日志默认输出级别 -->
+        <property name="LOG_LEVER" value="INFO"/>
+        <!-- 日志默认切割的最小单位 -->
+        <property name="FILE_SIZE" value="10MB"/>
+        <!-- 控制台默认输出格式,"%-5level":日志级别,"%l":输出完整的错误位置,是小写的L,因为有行号显示,所以影响日志输出的性能 -->
+        <!--<property name="CONSOLE_LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %l - %m%n</property>-->
+        <property name="CONSOLE_LOG_PATTERN">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint}  %clr{%-40.40c{1.}}{cyan} %L  %clr{:}{faint}  %m%n%xwEx</property>
+        <!-- 日志文件默认输出格式,不带行号输出(行号显示会影响日志输出性能);%C:大写,类名;%M:方法名;%m:错误信息;%n:换行 -->
+        <!-- <property name="log_pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %C.%M - %m%n</property> -->
+        <!-- 日志文件默认输出格式,另类带行号输出(对日志输出性能未知);%C:大写,类名;%M:方法名;%L:行号;%m:错误信息;%n:换行 -->
+        <property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %C.%M[%L line] - %m%n</property>
+        <!-- 日志默认同类型日志,多久生成一个新的日志文件,这个配置需要和filePattern结合使用;
+              如果设置为1,filePattern是%d{yyyy-MM-dd}到天的格式,则间隔一天生成一个文件
+              如果设置为12,filePattern是%d{yyyy-MM-dd-HH}到小时的格式,则间隔12小时生成一个文件 -->
+        <property name="TIMEINTERVAL">1</property>
+        <!-- 日志默认同类型日志,是否对封存时间进行调制,若为true,则封存时间将以0点为边界进行调整,
+                如:现在是早上3am,interval是4,那么第一次滚动是在4am,接着是8am,12am...而不是7am -->
+        <property name="TIMEMODULATE">true</property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{${CONSOLE_LOG_PATTERN}}"/>
+        </Console>
+        <File name="logTime" fileName="${LOG_PATH}/realTimeLog.log" append="false">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </File>
+        <!-- 这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="RollingFileInfo" fileName="${LOG_PATH}/info.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${TIMEINTERVAL}" modulate="${TIMEMODULATE}"/>
+                <SizeBasedTriggeringPolicy size="${FILE_SIZE}"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="RollingFileWarn" fileName="${LOG_PATH}/warn.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log.gz">
+            <ThresholdFilter level="warn"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${TIMEINTERVAL}" modulate="${TIMEMODULATE}"/>
+                <SizeBasedTriggeringPolicy size="${FILE_SIZE}"/>
+            </Policies>
+            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件，这里设置了20 -->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+        <RollingFile name="RollingFileError" fileName="${LOG_PATH}/error.log"
+                     filePattern="${LOG_PATH}/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log.gz">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${TIMEINTERVAL}" modulate="${TIMEMODULATE}"/>
+                <SizeBasedTriggeringPolicy size="${FILE_SIZE}"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <!--只显示com.staging.business包下的TRAC以上E日志,可以与ROOT配置共存,additivity避免重复打印-->
+        <!--<Logger name="com.staging.business" level="TRACE" additivity="false">-->
+        <!--<AppenderRef ref="Console"/>-->
+        <!--</Logger>-->
+
+        <!--只显示ERROR级别的日志-->
+        <!--AsyncRoot为异步模式 includeLocation属性设置为true才可以打印出类名和行数-->
+        <!--异步第二种实现方式是在程序入口加入 System.setProperty("Log4jContextSelector", "org.apache.logging.log4j.core.async.AsyncLoggerContextSelector")-->
+        <AsyncRoot level="${LOG_LEVER}" includeLocation="true">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFileInfo"/>
+            <appender-ref ref="RollingFileWarn"/>
+            <appender-ref ref="RollingFileError"/>
+            <appender-ref ref="logTime"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>

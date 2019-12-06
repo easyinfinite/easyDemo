@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 功能描述: 腾讯短信模板实体
  *
  * @return: sms.tengxun.entity.TencentSmsModel
- * @auther: chenyunxuan
+ * @author: chenyunxuan
  * @date: 2019-11-29 17:26
  */
 @Data

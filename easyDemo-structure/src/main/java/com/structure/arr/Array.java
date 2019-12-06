@@ -125,7 +125,7 @@ public class Array<E> {
      * @author: chenyunxuan
      * @updateTime: 2019-12-06 18:59
      */
-    public E romoveFirst() {
+    public E removeFirst() {
         return remove(0);
     }
 
@@ -144,6 +144,7 @@ public class Array<E> {
      * @updateTime: 2019-12-06 19:00
      */
     public E remove(int index) {
+        Preconditions.checkArgument(size > 0, "size must be more then 0");
         Preconditions.checkArgument(index >= 0, "index %s Less than 0 ", index);
         Preconditions.checkArgument(index < size, "index > size ");
         E removeItem = data[index];

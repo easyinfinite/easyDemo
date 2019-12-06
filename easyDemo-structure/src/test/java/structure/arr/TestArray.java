@@ -19,7 +19,9 @@ public class TestArray {
         intArr.addFirst(5);
         intArr.add(2, 11);
         System.out.println(intArr.remove(2));
-        System.out.println(intArr.romoveLast());
+        System.out.println(intArr.removeLast());
+        System.out.println(intArr.removeFirst());
+        System.out.println(intArr.removeFirst());
         System.out.println(intArr);
     }
 }

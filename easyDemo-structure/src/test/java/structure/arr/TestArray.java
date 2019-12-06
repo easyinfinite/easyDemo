@@ -17,7 +17,9 @@ public class TestArray {
         System.out.println("limit=" + intArr.getLimit());
         intArr.addLast(2);
         intArr.addFirst(5);
-        intArr.add(2,11);
+        intArr.add(2, 11);
+        System.out.println(intArr.remove(2));
+        System.out.println(intArr.romoveLast());
         System.out.println(intArr);
     }
 }

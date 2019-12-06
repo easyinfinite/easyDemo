@@ -120,6 +120,43 @@ public class Array<E> {
     }
 
 
+    /**
+     * @description: 删除开始元素
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-06 18:59
+     */
+    public E romoveFirst() {
+        return remove(0);
+    }
+
+    /**
+     * @description: 删除末端元素
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-06 19:00
+     */
+    public E removeLast() {
+        return remove(size - 1);
+    }
+
+    /**
+     * @description: 删除任意位置元素
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-06 19:00
+     */
+    public E remove(int index) {
+        Preconditions.checkArgument(index >= 0, "index %s Less than 0 ", index);
+        Preconditions.checkArgument(index < size, "index > size ");
+        E removeItem = data[index];
+        //逐个往前缩减一个单位
+        for (int a = index; a < size; a++) {
+            data[a] = data[a + 1];
+        }
+        //下标追加1
+        size--;
+        return removeItem;
+    }
+
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

@@ -17,12 +17,14 @@
         <!-- 设置日志文件的目录名称 -->
         <property name="LOG_PATH" value="log"/>
         <!-- 日志默认输出级别 -->
-        <property name="LOG_LEVER" value="INFO"/>
+        <property name="LOG_LEVER" value="info"/>
         <!-- 日志默认切割的最小单位 -->
         <property name="FILE_SIZE" value="10MB"/>
         <!-- 控制台默认输出格式,"%-5level":日志级别,"%l":输出完整的错误位置,是小写的L,因为有行号显示,所以影响日志输出的性能 -->
         <!--<property name="CONSOLE_LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %l - %m%n</property>-->
-        <property name="CONSOLE_LOG_PATTERN">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint}  %clr{%-40.40c{1.}}{cyan} %L  %clr{:}{faint}  %m%n%xwEx</property>
+        <property name="CONSOLE_LOG_PATTERN">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p}
+            %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{%-40.40c{1.}}{cyan} %L %clr{:}{faint} %m%n%xwEx
+        </property>
         <!-- 日志文件默认输出格式,不带行号输出(行号显示会影响日志输出性能);%C:大写,类名;%M:方法名;%m:错误信息;%n:换行 -->
         <!-- <property name="log_pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %C.%M - %m%n</property> -->
         <!-- 日志文件默认输出格式,另类带行号输出(对日志输出性能未知);%C:大写,类名;%M:方法名;%L:行号;%m:错误信息;%n:换行 -->
@@ -76,8 +78,8 @@
     </Appenders>
     <Loggers>
         <!--只显示com.staging.business包下的TRAC以上E日志,可以与ROOT配置共存,additivity避免重复打印-->
-        <!--<Logger name="com.staging.business" level="TRACE" additivity="false">-->
-        <!--<AppenderRef ref="Console"/>-->
+        <!--<Logger name="org.springframework" level="INFO" additivity="false">-->
+            <!--<AppenderRef ref="Console"/>-->
         <!--</Logger>-->
 
         <!--只显示ERROR级别的日志-->

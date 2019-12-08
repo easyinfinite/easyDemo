@@ -1,6 +1,8 @@
 package com.staging.business.controller;
 
 
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.staging.base.aspect.Runtime;
 import com.staging.base.result.R;
 import com.staging.base.util.ResultUtil;
@@ -53,10 +55,16 @@ public class DemoControl {
     @DeleteMapping("user")
     @Runtime
     public R<User> delUser() {
-        int a = 0;
-        int c = 1 / a;
-        log.info("hahhdhasd");
-        log.error("{132131}={}", "大叔大婶大");
+        String str = "12";
+        //use guava
+        if (!Strings.isNullOrEmpty(str)) {
+            log.debug("我是一个非空参数{}", str);
+        }
+        int a = 1;
+        //用guava工具包输出异常
+        Preconditions.checkArgument(a == 0, "must be positive: %s", a);
+        log.info("测试一下info log");
+        log.error("测试一下带参数 {}", "我是参数");
         return ResultUtil.error(10001);
     }
 

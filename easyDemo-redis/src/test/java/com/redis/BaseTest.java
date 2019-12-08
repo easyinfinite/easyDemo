@@ -36,18 +36,18 @@ public class BaseTest {
     public void set() throws InterruptedException {
         // 设置字符串
         RBucket<String> keyObj = redissonClient.getBucket("k1");
-        keyObj.set("v1236");
+        keyObj.set("测试STR");
         // 设置int
         RBucket<Integer> keyObj1 = redissonClient.getBucket("k2");
-        keyObj1.set(231234);
+        keyObj1.set(123);
         //设置lisr
         RList<String> s = redissonClient.getList("k3");
-        s.add("12312");
-        s.add("1233");
+        s.add("测试list1");
+        s.add("测试list2");
         //设置map
         RMap<String, RList> ss = redissonClient.getMap("k4");
-        ss.put("hahaha", s);
-        ss.put("111", s);
+        ss.put("map1", s);
+        ss.put("map2", s);
 
         //与RedisTemplate可以共用
         stringRedisTemplate.opsForValue().set("yunai1111", "shuai");

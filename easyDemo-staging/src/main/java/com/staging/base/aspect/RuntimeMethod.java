@@ -1,6 +1,7 @@
 package com.staging.base.aspect;
 
 
+import com.google.common.base.Stopwatch;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -12,6 +13,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 功能描述: 记录程序时间的切面
@@ -26,17 +28,11 @@ import javax.servlet.http.HttpServletRequest;
 @Configuration
 @Log4j2
 public class RuntimeMethod {
-    /**
-     * 定义程序开始时长
-     */
-    ThreadLocal<Long> startTime = new ThreadLocal<Long>();
-
     @Pointcut("@annotation(com.staging.base.aspect.Runtime)")
     private void aopPoint() {
     }
 
     /**
-     *
      * 功能描述: 环绕通知
      *
      * @param: [joinPoint]
@@ -52,29 +48,30 @@ public class RuntimeMethod {
 
 
         // 计算时间逻辑
-        startTime.set(System.currentTimeMillis());
+        Stopwatch stopwatch = Stopwatch.createStarted();
         // 调用目标方法
         Object result = joinPoint.proceed();
+        long nanos = stopwatch.elapsed(TimeUnit.MILLISECONDS);
         log.info("方法路径为:{}/{}()", clazzName, methodName);
-        log.info("处理时间为:{}s", (System.currentTimeMillis() - startTime.get()) / (1000 * 1.0));
+        log.info("处理时间为:{}s", nanos);
 
 
         //打印请求体
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = requestAttributes.getRequest();
         log.info("请求地址:{}," +
-                 "请求方式:{}," +
-                 "请求类方法:{}," +
-                 "请求类方法参数:{}," +
-                 "RemoteHost:{}," +
-                 "Content-type:{}," +
-                 "User-Agent:{}",
-                 request.getRequestURL(),
-                 request.getMethod(),
-                 joinPoint.getSignature(),
-                 request.getRemoteHost(),
-                 request.getHeader("Content-type"),
-                 request.getHeader("User-Agent"));
+                        "请求方式:{}," +
+                        "请求类方法:{}," +
+                        "请求类方法参数:{}," +
+                        "RemoteHost:{}," +
+                        "Content-type:{}," +
+                        "User-Agent:{}",
+                request.getRequestURL(),
+                request.getMethod(),
+                joinPoint.getSignature(),
+                request.getRemoteHost(),
+                request.getHeader("Content-type"),
+                request.getHeader("User-Agent"));
     }
 
 }

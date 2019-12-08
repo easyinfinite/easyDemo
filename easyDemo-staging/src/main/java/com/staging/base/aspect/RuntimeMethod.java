@@ -53,7 +53,7 @@ public class RuntimeMethod {
         Object result = joinPoint.proceed();
         long nanos = stopwatch.elapsed(TimeUnit.MILLISECONDS);
         log.info("方法路径为:{}/{}()", clazzName, methodName);
-        log.info("处理时间为:{}s", nanos);
+        log.info("处理时间为:{}ms", nanos);
 
 
         //打印请求体

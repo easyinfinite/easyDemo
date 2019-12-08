@@ -1,0 +1,5 @@
+server:
+  port: 9997
+spring:
+    redisson:
+      config: classpath:redisson-config.yml

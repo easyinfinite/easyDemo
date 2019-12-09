@@ -13,15 +13,20 @@ public class TestArray {
     public static void main(String[] args) {
         //初始化数组(不可用基本类型)
         Array<Integer> intArr = new Array<>();
-        System.out.println("size=" + intArr.getSize());
         System.out.println("limit=" + intArr.getLimit());
-        intArr.addLast(2);
-        intArr.addFirst(5);
-        intArr.add(2, 11);
-        System.out.println(intArr.remove(2));
-        System.out.println(intArr.removeLast());
-        System.out.println(intArr.removeFirst());
-        System.out.println(intArr.removeFirst());
+        //测试扩容
+        int a = 0;
+        while (a < 20) {
+            intArr.add(a++, a);
+        }
+        System.out.println("arrLength add=" + intArr.getLimit());
+        //测试减少容量
+        a = 0;
+        while (a < 19) {
+            intArr.removeFirst();
+            a++;
+        }
+        System.out.println("arrLength remove=" + intArr.getLimit());
         System.out.println(intArr);
     }
 }

@@ -106,7 +106,11 @@ public class Array<E> {
      * @updateTime: 2019-12-06 18:36
      */
     public void add(int index, E item) {
-        Preconditions.checkArgument(data.length != size, "size limit : %s", data.length);
+        //Preconditions.checkArgument(data.length != size, "size limit : %s", data.length);
+        //如果超出范围,扩容
+        if (data.length == size) {
+            resetArray(2 * data.length);
+        }
         Preconditions.checkArgument(index >= 0, "index %s Less than 0 ", index);
         Preconditions.checkArgument(index <= size, "index > size ");
         //逐个往后延伸一个单位
@@ -149,14 +153,41 @@ public class Array<E> {
         Preconditions.checkArgument(index < size, "index > size ");
         E removeItem = data[index];
         //逐个往前缩减一个单位
-        for (int a = index; a < size; a++) {
+        for (int a = index; a < data.length - 1; a++) {
             data[a] = data[a + 1];
         }
+        //把站位去掉
+        data[data.length - 1] = null;
         //下标追加1
         size--;
+        //减少容量
+        if (data.length != 0 && data.length / 4 == size) {
+            resetArray(data.length / 4);
+        }
         return removeItem;
     }
 
+    /**
+     * @description: 获取某个位置的元素
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-09 15:22
+     */
+    public E get(int index) {
+        Preconditions.checkArgument(index >= 0, "index %s Less than 0 ", index);
+        Preconditions.checkArgument(index < size, "index > size ");
+        return data[index];
+    }
+
+    /**
+     * @description: 在数组某个位置替换元素
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-09 15:22
+     */
+    public void set(int index, E e) {
+        Preconditions.checkArgument(index >= 0, "index %s Less than 0 ", index);
+        Preconditions.checkArgument(index < size, "index > size ");
+        data[index] = e;
+    }
 
     @Override
     public String toString() {
@@ -170,6 +201,20 @@ public class Array<E> {
         }
         builder.append("}");
         return builder.toString();
+    }
+
+
+    /**
+     * @description: 重新定义数组长度
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-09 15:52
+     */
+    private void resetArray(int reSize) {
+        E[] newData = (E[]) new Object[reSize];
+        for (int a = 0; a < size; a++) {
+            newData[a] = data[a];
+        }
+        data = newData;
     }
 
 }

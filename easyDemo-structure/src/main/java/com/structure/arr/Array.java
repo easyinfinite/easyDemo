@@ -179,6 +179,25 @@ public class Array<E> {
         return data[index];
     }
 
+
+    /**
+     * @description: 返回最后一个元素
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-10 19:15
+     */
+    public E getLast() {
+        return get(size - 1);
+    }
+
+    /**
+     * @description: 返回最先的一个元素
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-10 19:16
+     */
+    public E getFirst() {
+        return get(0);
+    }
+
     /**
      * @description: 在数组某个位置替换元素
      * @author: chenyunxuan
@@ -188,20 +207,6 @@ public class Array<E> {
         Preconditions.checkArgument(index >= 0, "index %s Less than 0 ", index);
         Preconditions.checkArgument(index < size, "index > size ");
         data[index] = e;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("{");
-        for (E e : data) {
-            if (null != e) {
-                builder.append(e);
-                builder.append(",");
-            }
-        }
-        builder.append("}");
-        return builder.toString();
     }
 
 
@@ -216,6 +221,20 @@ public class Array<E> {
             newData[a] = data[a];
         }
         data = newData;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("{");
+        for (E e : data) {
+            if (null != e) {
+                builder.append(e);
+                builder.append(",");
+            }
+        }
+        builder.append("}");
+        return builder.toString();
     }
 
 }

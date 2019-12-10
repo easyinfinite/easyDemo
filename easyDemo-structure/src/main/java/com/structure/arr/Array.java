@@ -162,7 +162,8 @@ public class Array<E> {
         size--;
         //减少容量
         if (data.length != 0 && data.length / 4 == size) {
-            resetArray(data.length / 4);
+            //缩小为容量的二分之一
+            resetArray(data.length / 2);
         }
         return removeItem;
     }

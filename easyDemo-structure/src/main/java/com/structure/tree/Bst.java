@@ -137,4 +137,30 @@ public class Bst<E extends Comparable<E>> {
         return node;
     }
 
+    /**
+     * @description: 是否包含元素e
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-24 18:49
+     */
+    public boolean contains(E e) {
+        return contains(root, e);
+    }
+
+    /**
+     * @description: 递归包含元素e
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-24 18:51
+     */
+    private boolean contains(Node node, E e) {
+        if (node == null) {
+            return false;
+        }
+        //0相等,<0小于,>0大于
+        int compareResult = e.compareTo(node.e);
+        if (compareResult == 0) {
+            return true;
+        }
+        return contains(compareResult < 0 ? node.left : node.right, e);
+    }
+
 }

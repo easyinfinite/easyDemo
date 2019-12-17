@@ -128,9 +128,9 @@ public class Bst<E extends Comparable<E>> {
 
         //接下来判断与e元素的大小
         if (e.compareTo(node.e) < 0) {
-            addPro(node.left, e);
+            node.left = addPro(node.left, e);
         } else if (e.compareTo(node.e) > 0) {
-            addPro(node.right, e);
+            node.right = addPro(node.right, e);
         }
 
         //最后经过了所有递归返回参数
@@ -161,6 +161,48 @@ public class Bst<E extends Comparable<E>> {
             return true;
         }
         return contains(compareResult < 0 ? node.left : node.right, e);
+    }
+
+    /**
+     * @description: 二叉搜索树的前序遍历
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-17 19:12
+     */
+    public void preOrder() {
+        preOrder(root);
+    }
+
+    private void preOrder(Node node) {
+        if (node != null) {
+            System.out.println(node.e);
+            preOrder(node.left);
+            preOrder(node.right);
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        generateString(root, 0, sb);
+        return sb.toString();
+    }
+
+    private void generateString(Node node, int death, StringBuilder sb) {
+        if (node == null) {
+            sb.append(generateDeath(death) + "null\n");
+            return;
+        }
+        sb.append(generateDeath(death) + node.e + "\n");
+        generateString(node.left, ++death, sb);
+        generateString(node.right, ++death, sb);
+    }
+
+    private String generateDeath(int death) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < death; i++) {
+            sb.append("--");
+        }
+        return sb.toString();
     }
 
 }

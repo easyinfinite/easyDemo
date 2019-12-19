@@ -3,6 +3,7 @@ package com.validation.controller;
 import com.validation.entity.User;
 import com.validation.result.R;
 import com.validation.util.ResultUtil;
+import com.validation.valiNote.group.App;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -24,7 +25,7 @@ public class ValidationController {
 
     @PostMapping(value = "save")
     @ResponseBody
-    public R saveUser(@RequestBody @Validated User user) {
+    public R saveUser(@RequestBody @Validated(App.class) User user) {
         log.info("Good" + user.getBirthday());
         return ResultUtil.data(user);
     }

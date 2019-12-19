@@ -2,8 +2,7 @@ package com.validation.config;
 
 import com.validation.result.R;
 import com.validation.util.ResultUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -23,8 +22,8 @@ import javax.servlet.http.HttpServletRequest;
  * @version: 1.0.0
  **/
 @ControllerAdvice
+@Log4j2
 public class GlobalExceptionHandler {
-    private Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * @title: 登陆异常
@@ -39,7 +38,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = AuthException.class)
     @ResponseBody
     public R handleAuthException(HttpServletRequest req, AuthException e) throws AuthException {
-        logger.info("AuthException", e.getMessage());
+        log.info("AuthException", e.getMessage());
         return ResultUtil.error(70001);
     }
 
@@ -55,15 +54,24 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseBody
-    public R handleMethodArgumentNotValidException(HttpServletRequest req, MethodArgumentNotValidException e) throws MethodArgumentNotValidException {
+    public R handleMethodArgumentNotValidException(HttpServletRequest req, MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
-        String errorMesssage = "Invalid Request:\n";
-
+        StringBuilder sb = new StringBuilder();
+        sb.append("url=");
+        sb.append(req.getRequestURI().replace("/", ""));
+        sb.append(",");
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
-            errorMesssage += fieldError.getDefaultMessage() + "\n";
+            sb.append("field=");
+            sb.append(fieldError.getObjectName());
+            sb.append(".");
+            sb.append(fieldError.getField());
+            sb.append(",error=");
+            sb.append(fieldError.getDefaultMessage());
+            sb.append(";");
         }
-        logger.info("MethodArgumentNotValidException", e);
-        return ResultUtil.error(1001, errorMesssage);
+        String msg = sb.toString();
+        log.error("参数异常:{}", msg);
+        return ResultUtil.error(1001, msg);
     }
 
     /**
@@ -79,7 +87,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public R handleException(HttpServletRequest req, Exception e) throws Exception {
-        logger.error(e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return ResultUtil.error(111, "异常");
     }
 
@@ -102,7 +110,7 @@ public class GlobalExceptionHandler {
         sb.append(fieldError.getField()).append("=[").append(fieldError.getRejectedValue()).append("]")
                 .append(fieldError.getDefaultMessage());
         // 生成返回结果
-        logger.info("BindException", e);
+        log.info("BindException", e);
         return ResultUtil.error(10001, sb.toString());
     }
 }

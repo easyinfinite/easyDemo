@@ -1,7 +1,8 @@
 package com.validation.config;
 
+import com.validation.constant.ResultUtil;
+import com.validation.exception.BusinessException;
 import com.validation.result.R;
-import com.validation.util.ResultUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @ClassName:GlobalExceptionHandler
- * @Description //TODO
+ * @Description 全局异常处理类
  * @Author: chenyunxuan
  * @Date: 2019-12-18 16:29
  * @version: 1.0.0
@@ -88,7 +89,13 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public R handleException(HttpServletRequest req, Exception e) throws Exception {
         log.error(e.getMessage(), e);
-        return ResultUtil.error(111, "异常");
+        if (e instanceof NullPointerException) {
+            log.error("{} error", req.getRequestURI());
+        } else if (e instanceof BusinessException) {
+            log.error("{} own error", req.getRequestURI());
+            return ResultUtil.error(((BusinessException) e).getCode(), ((BusinessException) e).getMsg());
+        }
+        return ResultUtil.error(111, "运行异常");
     }
 
     /**

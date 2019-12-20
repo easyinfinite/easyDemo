@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.security.auth.message.AuthException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 
 /**
  * @ClassName: GlobalExceptionHandler
@@ -27,24 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 public class GlobalExceptionHandler {
 
     /**
-     * @title: 登陆异常
-     * @description:
-     * @param:
-     * @return:
-     * @author: chenyunxuan
-     * @date: 2019-12-18 16:38
-     * @version: 1.0.0
-     * @updateTime: 2019-12-18 16:38
-     */
-    @ExceptionHandler(value = AuthException.class)
-    @ResponseBody
-    public R handleAuthException(HttpServletRequest req, AuthException e) throws AuthException {
-        log.info("AuthException", e.getMessage());
-        return ResultUtil.error(70001);
-    }
-
-    /**
-     * @title: 参数异常
+     * @title: JSON传值出现异常
      * @description:
      * @param:
      * @return:
@@ -76,6 +59,23 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * @title: 单个参数参数异常
+     * @description:
+     * @param:
+     * @return:
+     * @author: chenyunxuan
+     * @date: 2019-12-18 16:37
+     * @version: 1.0.0
+     * @updateTime: 2019-12-18 16:37
+     */
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    @ResponseBody
+    public R handleMethodArgumentNotValidException(HttpServletRequest req, ConstraintViolationException e) {
+        log.error("参数异常:{}", e);
+        return ResultUtil.error(1001, e.toString());
+    }
+
+    /**
      * @title: 全局异常
      * @description:
      * @param:
@@ -99,7 +99,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * @title: 其他异常
+     * @title: 提交FORM参数异常
      * @description:
      * @param:
      * @return:

@@ -16,7 +16,7 @@ import javax.security.auth.message.AuthException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @ClassName:GlobalExceptionHandler
+ * @ClassName: GlobalExceptionHandler
  * @Description 全局异常处理类
  * @Author: chenyunxuan
  * @Date: 2019-12-18 16:29

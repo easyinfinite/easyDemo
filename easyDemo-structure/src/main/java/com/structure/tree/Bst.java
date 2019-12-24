@@ -26,7 +26,17 @@ public class Bst<E extends Comparable<E>> {
         }
     }
 
+    /**
+     * @description: 根节点
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-24 17:19
+     */
     private Node root;
+    /**
+     * @description: 元素总数
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-24 17:19
+     */
     private int size;
 
     /**
@@ -55,6 +65,76 @@ public class Bst<E extends Comparable<E>> {
      */
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    /**
+     * @description: 二分搜索树插入
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-24 16:56
+     */
+    public void add(E e) {
+        //第一种解法
+        //如果根节点为空
+//        if (root == null) {
+//            root = new Node(e);
+//            size++;
+//        } else {
+//            add(root, e);
+//        }
+        root = addPro(root, e);
+    }
+
+    /**
+     * @description: 递归算法解决搜索树的增加(第一种解法)
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-24 18:01
+     */
+    private void add(Node node, E e) {
+        //如果元素与节点的元素相等就返回
+        if (e.equals(node.e)) {
+            return;
+            //如果小于该节点且节点的左边为空
+        } else if (e.compareTo(node.e) < 0 && node.left == null) {
+            node.left = new Node(e);
+            size++;
+            return;
+            //如果小于该节点且节点的右边为空
+        } else if (e.compareTo(node.e) > 0 && node.right == null) {
+            node.right = new Node(e);
+            size++;
+            return;
+        }
+
+        //递归写法
+        if (e.compareTo(node.e) < 0) {
+            add(node.left, e);
+        } else {
+            add(node.right, e);
+        }
+
+    }
+
+    /**
+     * @description: 简化上面add方法的思路
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-24 18:19
+     */
+    private Node addPro(Node node, E e) {
+        //node为空时,就肯定会加入一个新的node,写入e
+        if (node == null) {
+            size++;
+            return new Node(e);
+        }
+
+        //接下来判断与e元素的大小
+        if (e.compareTo(node.e) < 0) {
+            addPro(node.left, e);
+        } else if (e.compareTo(node.e) > 0) {
+            addPro(node.right, e);
+        }
+
+        //最后经过了所有递归返回参数
+        return node;
     }
 
 }

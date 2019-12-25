@@ -165,11 +165,25 @@ public class Bst<E extends Comparable<E>> {
 
     /**
      * @description: 二叉搜索树的前序遍历
+     * @Params: type 1前序遍历 2中序遍历 3后序遍历
      * @author: chenyunxuan
      * @updateTime: 2019-12-17 19:12
      */
-    public void preOrder() {
-        preOrder(root);
+    public void preOrder(int type) {
+        switch (type) {
+            case 1:
+                preOrder(root);
+                break;
+            case 2:
+                inOrder(root);
+                break;
+            case 3:
+                afterOrder(root);
+                break;
+            default:
+                break;
+        }
+
     }
 
     private void preOrder(Node node) {
@@ -177,6 +191,34 @@ public class Bst<E extends Comparable<E>> {
             System.out.println(node.e);
             preOrder(node.left);
             preOrder(node.right);
+        }
+    }
+
+    /**
+     * @description: 二叉搜索树的中序遍历
+     * (因为会先遍历出左子树的元素,所以此遍历是有序的)
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-25 11:04
+     */
+    private void inOrder(Node node) {
+        if (node != null) {
+            preOrder(node.left);
+            System.out.println(node.e);
+            preOrder(node.right);
+        }
+    }
+
+    /**
+     * @description: 二叉搜索树的后序遍历
+     * (因为会先遍历出左子树的元素,所以此遍历是有序的)
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-25 11:04
+     */
+    private void afterOrder(Node node) {
+        if (node != null) {
+            preOrder(node.left);
+            preOrder(node.right);
+            System.out.println(node.e);
         }
     }
 

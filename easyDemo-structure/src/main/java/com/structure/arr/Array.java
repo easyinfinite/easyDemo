@@ -216,7 +216,7 @@ public class Array<E> {
      * @updateTime: 2019-12-09 15:52
      */
     private void resetArray(int reSize) {
-        E[] newData = (E[]) new Object[reSize];
+        E[] newData = (E[]) new Object[reSize == 0? 1 : reSize];
         for (int a = 0; a < size; a++) {
             newData[a] = data[a];
         }

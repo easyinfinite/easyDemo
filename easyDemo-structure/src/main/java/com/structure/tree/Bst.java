@@ -1,5 +1,7 @@
 package com.structure.tree;
 
+import com.structure.stack.ArrayStack;
+
 /**
  * @ClassName: Bst
  * @Description 定义实现一个二分搜索树
@@ -186,6 +188,94 @@ public class Bst<E extends Comparable<E>> {
 
     }
 
+    /**
+     * @description: 二叉搜索树的前序遍历(非递归)
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-25 11:57
+     */
+    public void preOrderWithoutRecursive() {
+        //定义一个node泛型的栈
+        ArrayStack<Node> arrayStack = new ArrayStack<>();
+        //把root节点压入栈
+        arrayStack.push(root);
+        while (!arrayStack.isEmpty()) {
+            //取出栈顶元素
+            Node node = arrayStack.pop();
+            System.out.println(node.e);
+            //如果右子树不为空,压入栈
+            if (null != node.right) {
+                arrayStack.push(node.right);
+            }
+            //如果左子树不为空,压入栈
+            if (null != node.left) {
+                arrayStack.push(node.left);
+            }
+        }
+    }
+
+    /**
+     * @description: 二叉搜索树的中序遍历(非递归)
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-25 11:57
+     */
+    public void inOrderWithoutRecursive() {
+        //定义一个node泛型的栈
+        ArrayStack<Node> arrayStack = new ArrayStack<>();
+        //初始化节点
+        Node node = root;
+        while (null != node || !arrayStack.isEmpty()) {
+            //遍历完所有的左子树
+            while (null != node) {
+                arrayStack.push(node);
+                node = node.left;
+            }
+
+            if (!arrayStack.isEmpty()) {
+                //取出栈顶元素并输出
+                node = arrayStack.pop();
+                System.out.println(node.e);
+                //然后赋值node为node的右子树
+                node = node.right;
+            }
+        }
+    }
+
+    /**
+     * @description: 二叉搜索树的后序遍历(非递归)
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-25 11:57
+     */
+    public void afterOrderWithoutRecursive() {
+        //定义一个node泛型的栈
+        ArrayStack<Node> arrayStack = new ArrayStack<>();
+        //初始化节点
+        Node node = root;
+        Node curNode = root;
+        while (null != node || !arrayStack.isEmpty()) {
+            //遍历完所有的左子树
+            while (null != node) {
+                arrayStack.push(node);
+                node = node.left;
+            }
+            //查看当前栈顶元素(此时为最末尾的左子树)
+            node = arrayStack.peek();
+            //如果节点的右子树为空或者等于右子树等于游标
+            if (node.right == null || node.right == curNode) {
+                System.out.println(node.e);
+                arrayStack.pop();
+                curNode = node;
+                node = null;
+            } else {
+                node = node.right;
+            }
+        }
+    }
+
+    /**
+     * @description: 二叉搜索树的前序遍历
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-25 11:43
+     */
     private void preOrder(Node node) {
         if (node != null) {
             System.out.println(node.e);

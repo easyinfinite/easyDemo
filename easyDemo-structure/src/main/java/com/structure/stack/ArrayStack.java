@@ -29,6 +29,14 @@ public class ArrayStack<E> implements Stack<E> {
         this.array = new Array<E>(limit);
     }
 
+    /**
+     * @description: 栈是否为空
+     * @author: chenyunxuan
+     * @updateTime: 2019-12-25 11:53
+     */
+    public boolean isEmpty() {
+        return array.getSize() == 0;
+    }
 
     /**
      * @description: 有默认上限的栈

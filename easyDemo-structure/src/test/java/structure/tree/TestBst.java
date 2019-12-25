@@ -18,8 +18,10 @@ public class TestBst {
         for (int num : nums) {
             bst.add(num);
         }
-//        bst.preOrder();
-        System.out.println(bst);
+//        bst.preOrder(1);
+//        System.out.println("[][][][]");
+        bst.afterOrderWithoutRecursive();
+//        System.out.println(bst);
     }
 
 }

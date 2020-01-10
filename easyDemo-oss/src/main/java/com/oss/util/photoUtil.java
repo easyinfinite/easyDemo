@@ -1,6 +1,5 @@
 package com.oss.util;
 
-import com.cxmx.helmet.common.alioss.UploadOss;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -95,8 +94,8 @@ public class photoUtil {
      * 缩小Image，此方法返回源图像按给定宽度、高度限制下缩放后的图像
      *
      * @param inputImage
-     * @param maxWidth：压缩后宽度
-     * @param maxHeight：压缩后高度
+     * @param newWidth：压缩后宽度
+     * @param newHeight：压缩后高度
      * @throws IOException return
      */
     public static BufferedImage scaleByPercentage(BufferedImage inputImage, int newWidth, int newHeight) throws Exception {
@@ -220,7 +219,7 @@ public class photoUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         String fileName = sdf.format(new Date()) + "001";
         //初始化OSSClient
-        String fileNameOSS = UploadOss.uploadFile(fileName+".png", is, size);
-        System.out.println(fileNameOSS);
+//        String fileNameOSS = UploadOss.uploadFile(fileName+".png", is, size);
+//        System.out.println(fileNameOSS);
     }
 }

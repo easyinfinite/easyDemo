@@ -30,7 +30,7 @@ public class TestBst {
 //        System.out.println(reverseLeftWords(s, k));
 
 //        System.out.println(numberOfSteps(8));
-        System.out.println(lengthOfLongestSubstring("abcabcbb"));
+        System.out.println(lengthOfLongestSubstring("anviaj"));
     }
 
     //数据左移
@@ -159,25 +159,25 @@ public class TestBst {
             return 0;
         }
         List<String> list = new ArrayList<>();
+        List<String> copylist = new ArrayList<>();
         int count = 0;
         char[] strs = s.toCharArray();
         int length = strs.length;
-        char lastOne = 0;
+        int beginIndex = 0;
         for (int i = 0; i <= length - 1; i++) {
-            if (list.indexOf(strs[i] + "") > -1) {
+            beginIndex = list.indexOf(strs[i] + "");
+            if (beginIndex > -1) {
                 if (count < list.size()) {
                     count = list.size();
-                    if (list.indexOf(strs[i] + "") == 0) {
-                        count++;
-                    }
+                }
+                for (int j = beginIndex+1; j <= list.size() - 1; j++) {
+                    copylist.add(list.get(j));
                 }
                 list = new ArrayList<>();
-                if (strs[i] != lastOne) {
-                    list.add(lastOne + "");
-                }
+                list.addAll(copylist);
+                copylist = new ArrayList<>();
             }
             list.add(strs[i] + "");
-            lastOne = strs[i];
             if (i == length - 1) {
                 if (count < list.size()) {
                     count = list.size();

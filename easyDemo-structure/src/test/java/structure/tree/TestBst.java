@@ -1,6 +1,8 @@
 package structure.tree;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @ClassName:TestStack
@@ -13,7 +15,8 @@ public class TestBst {
 
     public static void main(String[] args) {
 //        Bst<Integer> bst = new Bst<>();
-//        int[] nums = {5, 3, 2, 4, 6, 8};
+        int[] nums = {1,2,3,4,0};
+        int[] index = {0,1,2,3,0};
 //
 //        for (int num : nums) {
 //            bst.add(num);
@@ -30,7 +33,7 @@ public class TestBst {
 //        System.out.println(reverseLeftWords(s, k));
 
 //        System.out.println(numberOfSteps(8));
-        System.out.println(lengthOfLongestSubstring("anviaj"));
+        System.out.println(createTargetArray(nums, index));
     }
 
     //数据左移
@@ -170,7 +173,7 @@ public class TestBst {
                 if (count < list.size()) {
                     count = list.size();
                 }
-                for (int j = beginIndex+1; j <= list.size() - 1; j++) {
+                for (int j = beginIndex + 1; j <= list.size() - 1; j++) {
                     copylist.add(list.get(j));
                 }
                 list = new ArrayList<>();
@@ -185,5 +188,85 @@ public class TestBst {
             }
         }
         return count;
+    }
+
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
+
+    //给定一棵二叉树，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
+    public static List<Integer> rightSideView(TreeNode root) {
+        if (root == null) return new ArrayList<Integer>();
+
+        List<Integer> leftList = rightSideView(root.left);//左子树生成的列表
+        List<Integer> rightList = rightSideView(root.right);//右子树生成的列表
+
+        int max = Math.max(leftList.size(), rightList.size());//左右子树列表的最大长度
+        List<Integer> list = new ArrayList<Integer>(max);//最终合成的列表
+        list.add(root.val);//先把当前节点加入最终列表
+        for (int i = 0; i < max; i++) {//优先加入右子树的列表元素，若右子树加完了，则开始加入左子树列表
+            if (i < rightList.size()) {
+                list.add(rightList.get(i));
+            } else {
+                list.add(leftList.get(i));
+            }
+        }
+        return list;
+    }
+
+    static int total;
+
+    public static int fib01(int n) {
+        if (n == 0)
+            return 1;
+        if (n == 1 || n == 2)
+            return n;
+        int result = (int) Math.floor(
+                1 / Math.sqrt(5) * (Math.pow((1 + Math.sqrt(5)) / 2, n + 1) - Math.pow((1 - Math.sqrt(5)) / 2, n + 1)));
+        return result;
+    }
+
+    //给你两个整数数组 nums 和 index。你需要按照以下规则创建目标数组：
+    //目标数组 target 最初为空。
+    //按从左到右的顺序依次读取 nums[i] 和 index[i]，在 target 数组中的下标 index[i] 处插入值 nums[i] 。
+    //重复上一步，直到在 nums 和 index 中都没有要读取的元素。
+    //请你返回目标数组。
+    //来源：力扣（LeetCode）
+    //链接：https://leetcode-cn.com/problems/create-target-array-in-the-given-order
+    //著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static int[] createTargetArray(int[] nums, int[] index) {
+        int length = nums.length;
+        int[] result = new int[nums.length];
+        if (length == 0) {
+            return result;
+        }
+
+        //解法1:利用list的add特性
+//        List<Integer> list = new ArrayList<>();
+//        for (int i = 0; i <= length - 1; i++) {
+//            list.add(index[i], nums[i]);
+//        }
+//        for (int i = 0; i <= list.size() - 1; i++) {
+//            result[i] = list.get(i);
+//        }
+
+        //解法2:先排好index的数列
+        for (int i = 0; i <= length - 1; i++) {
+            for (int j = 0; j <= i; j++) {
+                if (index[i] <= index[j] && i != j) {
+                    index[j] = index[j] + 1;
+                }
+            }
+        }
+        for (int i = 0; i <= length - 1; i++) {
+            result[index[i]] = nums[i];
+        }
+        return result;
     }
 }

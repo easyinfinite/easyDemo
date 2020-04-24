@@ -15,8 +15,9 @@ public class TestBst {
 
     public static void main(String[] args) {
 //        Bst<Integer> bst = new Bst<>();
-        int[] nums = {1,2,3,4,0};
-        int[] index = {0,1,2,3,0};
+        int[] nums = {1, 2, 3, 4, 0};
+        int[] index = {0, 1, 2, 3, 0};
+        int[][] indexs = {{1, 1}, {3, 4}, {-1, 0}};
 //
 //        for (int num : nums) {
 //            bst.add(num);
@@ -33,7 +34,11 @@ public class TestBst {
 //        System.out.println(reverseLeftWords(s, k));
 
 //        System.out.println(numberOfSteps(8));
-        System.out.println(createTargetArray(nums, index));
+//        System.out.println(createTargetArray(nums, index));
+//        System.out.println(minTimeToVisitAllPoints(indexs));
+
+        int[] arr = {8, 4, 5, 7, 1, 3, 6, 2};
+        sort(arr);
     }
 
     //数据左移
@@ -268,5 +273,76 @@ public class TestBst {
             result[index[i]] = nums[i];
         }
         return result;
+    }
+
+    //平面上有 n 个点，点的位置用整数坐标表示 points[i] = [xi, yi]。请你计算访问所有这些点需要的最小时间（以秒为单位）。
+    //你可以按照下面的规则在平面上移动：
+    //每一秒沿水平或者竖直方向移动一个单位长度，或者跨过对角线（可以看作在一秒内向水平和竖直方向各移动一个单位长度）。
+    //必须按照数组中出现的顺序来访问这些点。
+    //来源：力扣（LeetCode）
+    //链接：https://leetcode-cn.com/problems/minimum-time-visiting-all-points
+    //著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static int minTimeToVisitAllPoints(int[][] points) {
+        int a = 0, b = 0, c = 0;
+        for (int i = 0; i < points.length - 1; i++) {
+            a = Math.abs(points[i + 1][0] - points[i][0]);
+            b = Math.abs(points[i + 1][1] - points[i][1]);
+            c += Math.max(a, b);
+        }
+        return c;
+    }
+
+
+    //归并排序
+    public static void sort(int[] arr) {
+        int[] temp = new int[arr.length];//在排序前，先建好一个长度等于原数组长度的临时数组，避免递归中频繁开辟空间
+        sort(arr, 0, arr.length - 1, temp);
+    }
+
+    private static void sort(int[] arr, int left, int right, int[] temp) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            sort(arr, left, mid, temp);//左边归并排序，使得左子序列有序
+            sort(arr, mid + 1, right, temp);//右边归并排序，使得右子序列有序
+            merge(arr, left, mid, right, temp);//将两个有序子数组合并操作
+            System.out.println(left + "---" + right + "-----" + mid);
+        }
+    }
+
+    private static void merge(int[] arr, int left, int mid, int right, int[] temp) {
+        int i = left;//左序列指针
+        int j = mid + 1;//右序列指针
+        int t = 0;//临时数组指针
+        while (i <= mid && j <= right) {
+            System.out.println("i==" + i);
+            System.out.println("j==" + j);
+            if (arr[i] <= arr[j]) {
+                System.out.println("step1");
+                temp[t++] = arr[i++];
+            } else {
+                System.out.println("step2");
+                temp[t++] = arr[j++];
+            }
+        }
+
+
+        while(i<=mid){//将左边剩余元素填充进temp中
+            temp[t++] = arr[i++];
+        }
+
+        while(j<=right){//将右序列剩余元素填充进temp中
+            temp[t++] = arr[j++];
+        }
+
+
+        t = 0;
+        //将temp中的元素全部拷贝到原数组中
+        while(left <= right){
+            arr[left++] = temp[t++];
+        }
+
+        for (int a : arr) {
+            System.out.println(a);
+        }
     }
 }

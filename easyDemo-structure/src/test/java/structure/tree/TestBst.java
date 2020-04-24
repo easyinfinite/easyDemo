@@ -37,8 +37,14 @@ public class TestBst {
 //        System.out.println(createTargetArray(nums, index));
 //        System.out.println(minTimeToVisitAllPoints(indexs));
 
-        int[] arr = {8, 4, 5, 7, 1, 3, 6, 2};
-        sort(arr);
+//        int[] arr = {8, 4, 5, 7, 1, 3, 6, 2};
+//        sort(arr);
+
+//        int[] coins = {2, 3, 10};
+//        System.out.println(minCount(coins));
+
+
+        System.out.println(balancedStringSplit("RLRRLLRLRL"));
     }
 
     //数据左移
@@ -326,23 +332,58 @@ public class TestBst {
         }
 
 
-        while(i<=mid){//将左边剩余元素填充进temp中
+        while (i <= mid) {//将左边剩余元素填充进temp中
             temp[t++] = arr[i++];
         }
 
-        while(j<=right){//将右序列剩余元素填充进temp中
+        while (j <= right) {//将右序列剩余元素填充进temp中
             temp[t++] = arr[j++];
         }
 
 
         t = 0;
         //将temp中的元素全部拷贝到原数组中
-        while(left <= right){
+        while (left <= right) {
             arr[left++] = temp[t++];
         }
 
         for (int a : arr) {
             System.out.println(a);
         }
+    }
+
+    //桌上有 n 堆力扣币，每堆的数量保存在数组 coins 中。我们每次可以选择任意一堆，拿走其中的一枚或者两枚，求拿完所有力扣币的最少次数。
+    public static int minCount(int[] coins) {
+        int length = coins.length;
+        int count = 0;
+        for (int i = 0; i <= length - 1; i++) {
+            //如果是基数
+            if ((coins[i] & 1) == 1) {
+                count += (coins[i] >> 1) + 1;
+            } else {
+                count += coins[i] >> 1;
+            }
+        }
+        return count;
+    }
+
+    //在一个「平衡字符串」中，'L' 和 'R' 字符的数量是相同的。
+    //给出一个平衡字符串 s，请你将它分割成尽可能多的平衡字符串。
+    //返回可以通过分割得到的平衡字符串的最大数量。
+    //来源：力扣（LeetCode）
+    //链接：https://leetcode-cn.com/problems/split-a-string-in-balanced-strings
+    //著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static int balancedStringSplit(String s) {
+        int num = 0;
+        int res = 0;
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i) == 'L')
+                num++;
+            else
+                num--;
+            if(num == 0)
+                res++;
+        }
+        return res;
     }
 }

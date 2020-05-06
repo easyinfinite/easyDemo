@@ -1,8 +1,6 @@
 package structure.tree;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * @ClassName:TestStack
@@ -44,8 +42,27 @@ public class TestBst {
 //        System.out.println(minCount(coins));
 
 
-        System.out.println(balancedStringSplit("RLRRLLRLRL"));
+//        System.out.println(balancedStringSplit("RLRRLLRLRL"));
+//        int[] a = {3, 12, 24, 37, 45, 53, 61, 78, 90, 100};
+//        int m = binarysearch(a, 10, 100);
+
+
+//        int[] nums1 = {4, 5, 6, 7, 0, 1, 2};
+//        int target = 0;
+//        System.out.println(search(nums1, target));
+
+//        int[] a = {-1, -2, 1, 2, 3};
+////        System.out.println(moveZeroes(a));
+//        System.out.println(maximumProduct(a));
+//        int[] numss = {1,12,-5,-6,50,3};
+//        System.out.println(findMaxAverage(numss, 4));
+
+        int[] a = {2, 3, 5, 1, 3};
+        int b = 3;
+        System.out.println(kidsWithCandies(a, b));
+
     }
+
 
     //数据左移
     public static String reverseLeftWords(String s, int n) {
@@ -376,14 +393,157 @@ public class TestBst {
     public static int balancedStringSplit(String s) {
         int num = 0;
         int res = 0;
-        for(int i=0;i<s.length();i++){
-            if(s.charAt(i) == 'L')
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == 'L')
                 num++;
             else
                 num--;
-            if(num == 0)
+            if (num == 0)
                 res++;
         }
         return res;
+    }
+
+
+    //二分查找
+    static int binarysearch(int a[], int n, int value) {
+        int left = 0;
+        int right = n - 1;
+        while (left <= right)     //注意等号，当查询为最后一个元素时需要用到等号
+        {
+            int middle = left + ((right - left) >> 1);   //位移运算防溢出（借鉴）
+            //理解是(left+right)/2,会超过int型范围
+            if (value < a[middle])
+                right = middle - 1;            //在前半区
+            else if (value > a[middle])
+                left = middle + 1;            //在后半区
+            else
+                return middle;
+        }
+        return -1;        //没有找到
+    }
+
+
+    //假设按照升序排序的数组在预先未知的某个点上进行了旋转。
+    //( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。
+    //搜索一个给定的目标值，如果数组中存在这个目标值，则返回它的索引，否则返回 -1 。
+    //你可以假设数组中不存在重复的元素。
+    //你的算法时间复杂度必须是 O(log n) 级别。
+    //来源：力扣（LeetCode）
+    //链接：https://leetcode-cn.com/problems/search-in-rotated-sorted-array
+    //著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static int search(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        int mid;
+        while (left <= right) {
+            mid = left + ((right - left) >> 1);
+            if (nums[mid] == target) {
+                return mid;
+            }
+            //在左边
+            if (nums[left] <= nums[mid]) {
+                //如果目标数字大于等于当前数且小于等于中位数
+                if (target >= nums[left] && target < nums[mid]) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+                //在右边
+            } else {
+                if (target <= nums[right] && target > nums[mid]) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
+
+    //
+    public static List<Integer> moveZeroes(int[] nums) {
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < nums.length; ++i) {
+            int index = Math.abs(nums[i]) - 1;
+            if (nums[index] > 0) {
+                nums[index] *= -1;
+            }
+        }
+        //第二遍扫描，找到所有非负数，非负数所在的下标+1，即为缺失的数字
+        for (int i = 1; i <= nums.length; ++i) {
+            if (nums[i - 1] > 0) {
+                result.add(i);
+            }
+        }
+        return result;
+    }
+
+
+    //给定一个整型数组，在数组中找出由三个数组成的最大乘积，并输出这个乘积。
+    public static int maximumProduct(int[] nums) {
+        TreeSet<Integer> integers = new TreeSet<>((a, b) -> {
+            return a - b;
+        });
+        int multiplication = 1;
+        for (int a : nums) {
+            integers.add(a);
+            if (integers.size() > 3) {
+                integers.remove(integers.first());
+            }
+        }
+
+        for (int a : integers) {
+            multiplication *= a;
+        }
+        return multiplication;
+    }
+
+    //给定 n 个整数，找出平均数最大且长度为 k 的连续子数组，并输出该最大平均数。
+    public static double findMaxAverage(int[] nums, int k) {
+//        int count = 0, maxCount = 0;
+//        int compareCount = 0;
+//        //算出K个数的和
+//        for (int i = 0; i < k; i++) {
+//            count += nums[i];
+//            maxCount = count;
+//        }
+//        for (int j = k; j < nums.length; j++) {
+//            compareCount = count - nums[j - k] + nums[j];
+//            if (Math.max(count, compareCount) > maxCount) {
+//                maxCount = Math.max(count, compareCount);
+//            }
+//            count = compareCount;
+//        }
+//        return (double) maxCount / k;
+        for (int i = 1; i < k; i++) {//前面k-1个元素和单独计算
+            nums[i] += nums[i - 1];
+        }
+        int sum = nums[k - 1];//此时第k-1号元素即前k-1(包括k-1)个元素的和
+        for (int i = k; i < nums.length; i++) {
+            nums[i] += nums[i - 1];//前i个元素的和赋值给nums[i]
+            sum = Math.max(sum, nums[i] - nums[i - k]);//判断比较记录最大sum值
+        }
+        return sum * 1.0 / k;
+    }
+
+
+    //给你一个数组 candies 和一个整数 extraCandies ，其中 candies[i] 代表第 i 个孩子拥有的糖果数目。
+    //对每一个孩子，检查是否存在一种方案，将额外的 extraCandies 个糖果分配给孩子们之后，此孩子有 最多 的糖果。注意，允许有多个孩子同时拥有 最多 的糖果数目。
+    //来源：力扣（LeetCode）
+    //链接：https://leetcode-cn.com/problems/kids-with-the-greatest-number-of-candies
+    //著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static List<Boolean> kidsWithCandies(int[] candies, int extraCandies) {
+        List<Boolean> booleans = new ArrayList<>();
+        if (candies.length == 0) {
+            return booleans;
+        }
+        int[] copyCandies = candies.clone();
+        Arrays.sort(copyCandies);
+        int length = candies.length;
+        for (int i = 0; i < length; i++) {
+            int count = candies[i] + extraCandies;
+            booleans.add(copyCandies[copyCandies.length - 1] <= count);
+        }
+        return booleans;
     }
 }

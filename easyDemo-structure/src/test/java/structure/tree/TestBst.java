@@ -1,6 +1,8 @@
 package structure.tree;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @ClassName:TestStack
@@ -57,10 +59,18 @@ public class TestBst {
 //        int[] numss = {1,12,-5,-6,50,3};
 //        System.out.println(findMaxAverage(numss, 4));
 
-        int[] a = {2, 3, 5, 1, 3};
-        int b = 3;
-        System.out.println(kidsWithCandies(a, b));
+//        int[] a = {2, 3, 5, 1, 3};
+//        int b = 3;
+//        System.out.println(kidsWithCandies(a, b));
 
+//        int[] a = {2, 5, 1, 3, 4, 7};
+//        int[] b = shuffle(a, 3);
+//        for (int i : b) {
+//            System.out.println(i);
+//        }
+
+        String text = "To be or not to be";
+        System.out.println(arrangeWords(text));
     }
 
 
@@ -545,5 +555,94 @@ public class TestBst {
             booleans.add(copyCandies[copyCandies.length - 1] <= count);
         }
         return booleans;
+    }
+
+    //    请根据每日 气温 列表，重新生成一个列表。对应位置的输出为：要想观测到更高的气温，至少需要等待的天数。如果气温在这之后都不会升高，请在该位置用 0 来代替。
+//    例如，给定一个列表 temperatures = [73, 74, 75, 71, 69, 72, 76, 73]，你的输出应该是 [1, 1, 4, 2, 1, 1, 0, 0]。
+//    提示：气温 列表长度的范围是 [1, 30000]。每个气温的值的均为华氏度，都是在 [30, 100] 范围内的整数。
+//    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/daily-temperatures
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static int[] dailyTemperatures(int[] T) {
+//        int length = T.length;
+//        int[] dailyTemperatures = new int[length];
+//        for (int i = 0; i < length - 1; i++) {
+//            int day = 1;
+//            for (int j = i + 1; j < length; j++) {
+//                if (T[i] >= T[j]) {
+//                    day++;
+//                } else {
+//                    dailyTemperatures[i] = day;
+//                    break;
+//                }
+//            }
+//        }
+//        return dailyTemperatures;
+
+        //2 堆栈解法
+//        Stack<Integer> stack = new Stack<>();
+//        int[] ret = new int[T.length];
+//        for (int i = 0; i < T.length; i++) {
+//            while (!stack.isEmpty() && T[i] > T[stack.peek()]) {
+//                int idx = stack.pop();
+//                ret[idx] = i - idx;
+//            }
+//            stack.push(i);
+//        }
+//        return ret;
+        int[] res = new int[T.length];
+        //从后面开始查找
+        for (int i = res.length - 1; i >= 0; i--) {
+            int j = i + 1;
+            while (j < res.length) {
+                if (T[j] > T[i]) {
+                    //如果找到就停止while循环
+                    res[i] = j - i;
+                    break;
+                } else if (res[j] == 0) {
+                    //如果没找到，并且res[j]==0。说明第j个元素后面没有
+                    //比第j个元素大的值，因为这一步是第i个元素大于第j个元素的值，
+                    //那么很明显这后面就更没有大于第i个元素的值。直接终止while循环。
+                    break;
+                } else {
+                    //如果没找到，并且res[j]！=0说明第j个元素后面有比第j个元素大的值，
+                    //然后我们让j往后挪res[j]个单位，找到那个值，再和第i个元素比较
+                    j += res[j];
+                }
+            }
+        }
+        return res;
+    }
+
+
+    //    给你一个数组 nums ，数组中有 2n 个元素，按 [x1,x2,...,xn,y1,y2,...,yn] 的格式排列。
+//    请你将数组按 [x1,y1,x2,y2,...,xn,yn] 格式重新排列，返回重排后的数组。
+//    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/shuffle-the-array
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static int[] shuffle(int[] nums, int n) {
+        int[] ans = new int[n << 1];
+        int index = 0;
+        for (int i = 0; i < n; i++) {
+            ans[index++] = nums[i];
+            ans[index++] = nums[n + i];
+        }
+        return ans;
+    }
+
+
+    //    「句子」是一个用空格分隔单词的字符串。给你一个满足下述格式的句子 text :
+//    句子的首字母大写
+//    text 中的每个单词都用单个空格分隔。
+//    请你重新排列 text 中的单词，使所有单词按其长度的升序排列。如果两个单词的长度相同，则保留其在原句子中的相对顺序。
+//    请同样按上述格式返回新的句子。
+//    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/rearrange-words-in-a-sentence
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static String arrangeWords(String text) {
+        String[] arrays = text.toLowerCase().split(" ");
+        List<String> stringList = Stream.of(arrays).sorted(Comparator.comparingInt(String::length)).collect(Collectors.toList());
+        String newString = String.join(" ", stringList);
+        return newString.substring(0, 1).toUpperCase().concat(newString.substring(1));
     }
 }

@@ -10,6 +10,7 @@
         <module>easyDemo-redis</module>
         <module>easyDemo-structure</module>
         <module>easyDemo-validation</module>
+        <module>easyDemo-lamda</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

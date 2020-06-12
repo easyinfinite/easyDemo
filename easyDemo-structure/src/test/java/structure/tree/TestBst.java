@@ -1,8 +1,6 @@
 package structure.tree;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @ClassName:TestStack
@@ -15,7 +13,8 @@ public class TestBst {
 
     public static void main(String[] args) {
 //        Bst<Integer> bst = new Bst<>();
-        int[] nums = {1, 2, 3, 4, 0};
+        int[] nums = {-1, 0, 1, 2, -1, -4};
+        threeSum(nums);
         int[] index = {0, 1, 2, 3, 0};
         int[][] indexs = {{1, 1}, {3, 4}, {-1, 0}};
 //
@@ -69,15 +68,15 @@ public class TestBst {
 //            System.out.println(i);
 //        }
 
-        String text = "To be or not to be";
-        System.out.println(arrangeWords(text));
+//        String text = "To be or not to be";
+//        System.out.println(arrangeWords(text));
     }
 
 
     //数据左移
     public static String reverseLeftWords(String s, int n) {
         StringBuilder sb = new StringBuilder();
-        sb.append(s.substring(n, s.length()));
+        sb.append(s.substring(n));
         sb.append(s.substring(0, n));
         return sb.toString();
     }
@@ -640,9 +639,75 @@ public class TestBst {
 //    链接：https://leetcode-cn.com/problems/rearrange-words-in-a-sentence
 //    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
     public static String arrangeWords(String text) {
-        String[] arrays = text.toLowerCase().split(" ");
-        List<String> stringList = Stream.of(arrays).sorted(Comparator.comparingInt(String::length)).collect(Collectors.toList());
-        String newString = String.join(" ", stringList);
-        return newString.substring(0, 1).toUpperCase().concat(newString.substring(1));
+//        String[] arrays = text.toLowerCase().split(" ");
+//        List<String> stringList = Stream.of(arrays).sorted(Comparator.comparingInt(String::length)).collect(Collectors.toList());
+//        String newString = String.join(" ", stringList);
+//        return newString.substring(0, 1).toUpperCase().concat(newString.substring(1));
+        //2
+        if (text.length() == 0) {
+            return text;
+        }
+        // 寻找一种稳定算法
+        final String s = text.toLowerCase();
+        final String[] words = s.split(" ");
+        if (words.length <= 1) {
+            return text;
+        }
+        // 构建一个SortedMap
+        final TreeMap<Integer, LinkedList<String>> map = new TreeMap<>();
+        for (String word : words) {
+            map.putIfAbsent(word.length(), new LinkedList<>());
+            final LinkedList<String> list = map.get(word.length());
+            list.add(word);
+        }
+        int i = 0;
+        for (Map.Entry<Integer, LinkedList<String>> entry : map.entrySet()) {
+            final LinkedList<String> value = entry.getValue();
+            for (String s1 : value) {
+                words[i] = s1;
+                i++;
+            }
+        }
+        // 将word[0]的首字母大小
+        words[0] = words[0].substring(0, 1).toUpperCase() + (words[0].length() > 1 ? words[0].substring(1) : "");
+        return String.join(" ", words);
     }
+
+
+//    给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有满足条件且不重复的三元组。
+//    注意：答案中不可以包含重复的三元组。
+//    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/3sum
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+    public static List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        //最外层循环数组主体
+        List<List<Integer>> resultIntList = new ArrayList<>();
+        for (int startPoint = 0; startPoint < nums.length - 2; startPoint++) {
+            //如果取出最小的头指针大于0直接跳出
+            if (nums[startPoint] > 0) break;
+            //如果头指针大于0且头指针递增后发现和递增前相同
+            if (startPoint > 0 && nums[startPoint] == nums[startPoint - 1]) continue;
+            //定义左指针(头指针+1)和右指针(默认尾部)
+            int rightPoint = nums.length - 1, leftPoint = startPoint + 1;
+            while (leftPoint < rightPoint) {
+                //得到和
+                int sum = nums[startPoint] + nums[leftPoint] + nums[rightPoint];
+                //如果和小于0则表示左指针需要加一位,同时判断是否与之前元素相等,相等就再后移一位
+                if (sum < 0) {
+                    while (startPoint < rightPoint && nums[startPoint] == nums[++startPoint]) ;
+                } else if (sum > 0) {
+                    while (startPoint < rightPoint && nums[rightPoint] == nums[--rightPoint]) ;
+                } else {
+                    //如果等于0就加入列表,并同时执行左右指针前后各移动一位
+                    resultIntList.add(new ArrayList<Integer>(Arrays.asList(nums[startPoint], nums[leftPoint], nums[rightPoint])));
+                    while (startPoint < rightPoint && nums[startPoint] == nums[++startPoint]) ;
+                    while (startPoint < rightPoint && nums[rightPoint] == nums[--rightPoint]) ;
+                }
+            }
+        }
+        return resultIntList;
+    }
+
 }

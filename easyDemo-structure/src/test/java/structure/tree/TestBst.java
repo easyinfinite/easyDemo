@@ -14,10 +14,10 @@ public class TestBst {
 
     public static void main(String[] args) {
 //        Bst<Integer> bst = new Bst<>();
-        int[] nums = {-1, 0, 1, 2, -1, -4};
-        threeSum(nums);
-        int[] index = {0, 1, 2, 3, 0};
-        int[][] indexs = {{1, 1}, {3, 4}, {-1, 0}};
+//        int[] nums = {-1, 0, 1, 2, -1, -4};
+//        threeSum(nums);
+//        int[] index = {0, 1, 2, 3, 0};
+//        int[][] indexs = {{1, 1}, {3, 4}, {-1, 0}};
 //
 //        for (int num : nums) {
 //            bst.add(num);
@@ -71,6 +71,14 @@ public class TestBst {
 
 //        String text = "To be or not to be";
 //        System.out.println(arrangeWords(text));
+//        int n=4;
+//        System.out.println(climbStairs(n));
+//        int[] arr = {400};
+//        Arrays.stream(replaceElements(arr)).boxed().forEach(System.out::println);
+//        String[] strings = {"c", "acc", "ccc"};
+//        System.out.println(longestCommonPrefix(strings));
+        int[] nums = {1};
+        Arrays.stream(runningSum(nums)).boxed().forEach(System.out::println);
     }
 
 
@@ -725,4 +733,65 @@ public class TestBst {
         return a[0];
     }
 
+
+    // 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
+    // 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
+    public static int climbStairs(int n) {
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
+    }
+
+    //1299. 将每个元素替换为右侧最大元素
+    //给你一个数组 arr ，请你将每个元素用它右边最大的元素替换，如果是最后一个元素，用 -1 替换。
+    //完成所有替换操作后，请你返回这个数组。
+    public static int[] replaceElements(int[] arr) {
+        int length = arr.length;
+        int[] resultInt = new int[length];
+        int max = -1;
+        for (int i = arr.length - 1; i >= 0; i--) {
+            resultInt[i] = max;
+            max = Math.max(arr[i], max);
+        }
+        return resultInt;
+    }
+
+    //14. 最长公共前缀
+    //    编写一个函数来查找字符串数组中的最长公共前缀。
+    //    如果不存在公共前缀，返回空字符串 ""。
+    public static String longestCommonPrefix(String[] strs) {
+        int length = strs.length;
+        if (length == 0 || strs[0].length() == 0) {
+            return "";
+        }
+        int countLength = strs[0].length();
+        int i = 1;
+        while (i < length && countLength > 0)
+            if (!strs[i].startsWith(strs[0].substring(0, countLength))) {
+                countLength--;
+            } else {
+                i++;
+            }
+        return strs[0].substring(0, countLength);
+    }
+
+    //    给你一个数组 nums 。数组「动态和」的计算公式为：runningSum[i] = sum(nums[0]…nums[i]) 。
+    //    请返回 nums 的动态和。
+    //    来源：力扣（LeetCode）
+    //    链接：https://leetcode-cn.com/problems/running-sum-of-1d-array
+    //    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static int[] runningSum(int[] nums) {
+        int length = nums.length;
+        int[] resultInt = new int[nums.length];
+        int count = 0;
+        for (int i = 0; i < length; i++) {
+            count += nums[i];
+            resultInt[i] = count;
+        }
+        return resultInt;
+    }
 }

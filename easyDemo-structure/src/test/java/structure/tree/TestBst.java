@@ -2,6 +2,7 @@ package structure.tree;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @ClassName:TestStack
@@ -80,8 +81,15 @@ public class TestBst {
 //        int[] nums = {8,4,6,2,3};
 //        Arrays.stream(finalPrices(nums)).boxed().forEach(System.out::println);
 
-        String s = "(()())(())(()(()))";
-        System.out.println(removeOuterParentheses(s));
+//        String s = "(()())(())(()(()))";
+//        System.out.println(removeOuterParentheses(s));
+
+//        int[][] a = {{4, 3, 2, -1}, {3, 2, 1, -1}, {1, 1, -1, -2}, {-1, -1, -2, -3}};
+//        System.out.println(countNegatives(a));
+//        String s = "HELLO";
+//        System.out.println(toLowerCase(s));
+
+        Arrays.stream(sumZero(5)).boxed().forEach(System.out::println);
     }
 
 
@@ -842,21 +850,63 @@ public class TestBst {
 //            }
 //        }
 //        return builder.toString();
-        StringBuilder sb=new StringBuilder();
-        int mark=-1;
-        for(int i=0;i<S.length();i++){
-            char c=S.charAt(i);
-            if(c=='('){
+        StringBuilder sb = new StringBuilder();
+        int mark = -1;
+        for (int i = 0; i < S.length(); i++) {
+            char c = S.charAt(i);
+            if (c == '(') {
                 mark++;
             }
-            if(c==')'){
+            if (c == ')') {
                 mark--;
             }
-            if(mark==0&&c=='('||mark==-1&&c==')'){
+            if (mark == 0 && c == '(' || mark == -1 && c == ')') {
                 continue;
             }
             sb.append(c);
         }
         return sb.toString();
+    }
+
+    //    给你一个 m * n 的矩阵 grid，矩阵中的元素无论是按行还是按列，都以非递增顺序排列。
+//    请你统计并返回 grid 中 负数 的数目。
+    //https://leetcode-cn.com/problems/count-negative-numbers-in-a-sorted-matrix/
+    public static int countNegatives(int[][] grid) {
+        //先把数组加入流中,李咏flatmap扁平化得到intStream流.再过滤小于0的值
+        return (int) Arrays.stream(grid).flatMapToInt(Arrays::stream).filter(n -> n < 0).count();
+    }
+
+    //实现函数 ToLowerCase()，该函数接收一个字符串参数 str，并将该字符串中的大写字母转换成小写字母，之后返回新的字符串。
+    //https://leetcode-cn.com/problems/to-lower-case/
+    public static String toLowerCase(String str) {
+        StringBuffer StringBuffer = new StringBuffer();
+        for (int i = 0; i < str.length(); i++) {
+            char a = str.charAt(i);
+            //是否大写c >=65 && c <= 90
+            //是否小写c >=97 && c <= 122
+            if (a >= 65 && a <= 90) {
+                a += 32;
+            }
+            StringBuffer.append(a);
+        }
+        return StringBuffer.toString();
+    }
+
+    //给你一个整数 n，请你返回 任意 一个由 n 个 各不相同 的整数组成的数组，并且这 n 个数相加和为 0 。
+    //https://leetcode-cn.com/problems/find-n-unique-integers-sum-up-to-zero/
+    public static int[] sumZero(int n) {
+        int[] nums = new int[n];
+        //如果n是奇数且不等于2的时候,把n减一
+        if ((n & 1) == 1 && n != 2) {
+            n -= 1;
+        }
+        //用无限流生成一个正数递增为2的集合,大小为n/2
+        List<Integer> c = Stream.iterate(1, a -> a + 2).limit(n / 2).collect(Collectors.toList());
+        //依次赋值到数组取反形成对称
+        for (int i = 0; i < c.size(); i++) {
+            nums[i] = c.get(i);
+            nums[n - 1 - i] = -c.get(i);
+        }
+        return nums;
     }
 }

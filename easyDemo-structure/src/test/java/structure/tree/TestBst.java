@@ -77,8 +77,11 @@ public class TestBst {
 //        Arrays.stream(replaceElements(arr)).boxed().forEach(System.out::println);
 //        String[] strings = {"c", "acc", "ccc"};
 //        System.out.println(longestCommonPrefix(strings));
-        int[] nums = {1};
-        Arrays.stream(runningSum(nums)).boxed().forEach(System.out::println);
+//        int[] nums = {8,4,6,2,3};
+//        Arrays.stream(finalPrices(nums)).boxed().forEach(System.out::println);
+
+        String s = "(()())(())(()(()))";
+        System.out.println(removeOuterParentheses(s));
     }
 
 
@@ -793,5 +796,67 @@ public class TestBst {
             resultInt[i] = count;
         }
         return resultInt;
+    }
+
+    //    给你一个数组 prices ，其中 prices[i] 是商店里第 i 件商品的价格。
+//    商店里正在进行促销活动，如果你要买第 i 件商品，那么你可以得到与 prices[j] 相等的折扣，其中 j 是满足 j > i 且 prices[j] <= prices[i] 的 最小下标 ，如果没有满足条件的 j ，你将没有任何折扣。
+//    请你返回一个数组，数组中第 i 个元素是折扣后你购买商品 i 最终需要支付的价格。
+//    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/final-prices-with-a-special-discount-in-a-shop
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static int[] finalPrices(int[] prices) {
+        int length = prices.length;
+        for (int i = 0; i < length; i++) {
+            int min = 0;
+            int j = i + 1;
+            while (j < length) {
+                if (prices[i] >= prices[j]) {
+                    min = prices[j];
+                    break;
+                }
+                j++;
+            }
+            prices[i] = prices[i] - min;
+        }
+        return prices;
+    }
+
+
+    //    有效括号字符串为空 ("")、"(" + A + ")" 或 A + B，其中 A 和 B 都是有效的括号字符串，+ 代表字符串的连接。例如，""，"()"，"(())()" 和 "(()(()))" 都是有效的括号字符串。
+//    如果有效字符串 S 非空，且不存在将其拆分为 S = A+B 的方法，我们称其为原语（primitive），其中 A 和 B 都是非空有效括号字符串。
+//    给出一个非空有效字符串 S，考虑将其进行原语化分解，使得：S = P_1 + P_2 + ... + P_k，其中 P_i 是有效括号字符串原语。
+//    对 S 进行原语化分解，删除分解中每个原语字符串的最外层括号，返回 S 。
+//    来源：力扣（LeetCode）( ()() ) ( () ) ( ()(()) )
+//    链接：https://leetcode-cn.com/problems/remove-outermost-parentheses
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static String removeOuterParentheses(String S) {
+//        StringBuilder builder = new StringBuilder();
+//        int countLeft = 0, countRight = 0, point = 0;
+//        for (int i = 0; i < S.length(); i++) {
+//            char a = S.charAt(i);
+//            if (a == '(') countLeft++;
+//            else if (a == ')') countRight++;
+//            if (countLeft == countRight) {
+//                builder.append(S, point + 1, countRight + countLeft - 1);
+//                point = i + 1;
+//            }
+//        }
+//        return builder.toString();
+        StringBuilder sb=new StringBuilder();
+        int mark=-1;
+        for(int i=0;i<S.length();i++){
+            char c=S.charAt(i);
+            if(c=='('){
+                mark++;
+            }
+            if(c==')'){
+                mark--;
+            }
+            if(mark==0&&c=='('||mark==-1&&c==')'){
+                continue;
+            }
+            sb.append(c);
+        }
+        return sb.toString();
     }
 }

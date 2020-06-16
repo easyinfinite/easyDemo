@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * @ClassName:TestLamda
@@ -31,12 +33,20 @@ public class TestLamda {
 //        pairs.forEach(n -> System.out.println(n[0] + ":" + n[1]));
 //
 
-        Integer[] aa = new Integer[]{111, 222, 333};
-
-        String[] arrayOfWords = {"Goodbye", "World"};
-//        List<Character> sss =  Arrays.stream(aa).map(n -> n.toString().toCharArray()).flatMapToInt(i->(int)i).collect(Collectors.toList());
+//        Integer[] aa = new Integer[]{111, 222, 333};
+//
+//        String[] arrayOfWords = {"Goodbye", "World"};
+//        List<String> sss =  Arrays.stream(aa).map(n -> n.toString()).flatMap(i->Arrays.stream(i.split(""))).collect(Collectors.toList());
 //        sss.forEach(System.out::println);
 
+
+//        String s3 = new String("1") + new String("1");
+//        s3.intern();
+//        String s4 = "11";
+//        System.out.println(s3 == s4);
+
+        Optional<Integer> c = Stream.iterate(new int[]{0, 1}, n -> new int[]{n[1], n[0] + n[1]}).limit(400).map(n -> n[0]).sorted((a, b) -> b - a).skip(1).findFirst();
+        System.out.println(c.get());
     }
 
 

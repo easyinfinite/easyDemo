@@ -2,6 +2,7 @@ package structure.tree;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -89,7 +90,13 @@ public class TestBst {
 //        String s = "HELLO";
 //        System.out.println(toLowerCase(s));
 
-        Arrays.stream(sumZero(5)).boxed().forEach(System.out::println);
+//        Arrays.stream(sumZero(5)).boxed().forEach(System.out::println);
+
+//        int[] a = {-4, -1, 10, 3, 0};
+//        Arrays.stream(sortedSquares1(a)).boxed().forEach(System.out::println);
+//        System.out.println(missingNumber(a));
+//        System.out.println(maxScoreSightseeingPair(a));
+        System.out.println(maximum(1,2));
     }
 
 
@@ -908,5 +915,125 @@ public class TestBst {
             nums[n - 1 - i] = -c.get(i);
         }
         return nums;
+    }
+
+    //给定正整数数组 A，A[i] 表示第 i 个观光景点的评分，并且两个景点 i 和 j 之间的距离为 j - i。
+//    一对景点（i < j）组成的观光组合的得分为（A[i] + A[j] + i - j）：景点的评分之和减去它们两者之间的距离。
+//    返回一对观光景点能取得的最高分。
+//    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/best-sightseeing-pair
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static int maxScoreSightseeingPair(int[] A) {
+
+        //暴力超时方案
+//        int minusMax = 0, plusMax = 0;
+//        for (int i = 1; i < A.length; i++) {
+//            if (A[i] - i >= minusMax || minusMax - A[i] - i < i) {
+//                minusMax = A[i] - i;
+//                int j = -1;
+//                while (++j < i) plusMax = Math.max(minusMax + A[j] + j, plusMax);
+//            }
+//        }
+//        return plusMax;
+
+        //贪心算法
+        int leftA = A[0], plusMax = 0;
+        for (int i = 1; i < A.length; i++) {
+            plusMax = Math.max(plusMax, A[i] - i + leftA);
+            leftA = Math.max(leftA, A[i] + i);
+        }
+        return plusMax;
+    }
+
+
+    //    在二维平面上，有一个机器人从原点 (0, 0) 开始。给出它的移动顺序，判断这个机器人在完成移动后是否在 (0, 0) 处结束。
+//    移动顺序由字符串表示。字符 move[i] 表示其第 i 次移动。机器人的有效动作有 R（右），L（左），U（上）和 D（下）。如果机器人在完成所有动作后返回原点，则返回 true。否则，返回 false。
+//    注意：机器人“面朝”的方向无关紧要。 “R” 将始终使机器人向右移动一次，“L” 将始终向左移动等。此外，假设每次移动机器人的移动幅度相同。
+//    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/robot-return-to-origin
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public boolean judgeCircle(String moves) {
+        int count = 0;
+        for (int i = 0; i < moves.length(); i++) {
+            char c = moves.charAt(i);
+            switch (c) {
+                case 'R':
+                    count++;
+                    break;
+                case 'L':
+                    count--;
+                    break;
+                case 'U':
+                    count += 2;
+                    break;
+                case 'D':
+                    count -= 2;
+                    break;
+            }
+        }
+        return count == 0;
+    }
+
+
+    //    一个长度为n-1的递增排序数组中的所有数字都是唯一的，并且每个数字都在范围0～n-1之内。在范围0～n-1内的n个数字中有且只有一个数字不在该数组中，请找出这个数字。
+//    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/que-shi-de-shu-zi-lcof
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static int missingNumber(int[] nums) {
+        //二分查找
+        int startPoint = 0, endPoint = nums.length - 1;
+        while (startPoint <= endPoint) {
+            int midPoint = startPoint + ((endPoint - startPoint) >> 1);
+            if (nums[midPoint] == midPoint) startPoint = midPoint + 1;
+            else endPoint = midPoint - 1;
+        }
+        return startPoint;
+    }
+
+    //    给定长度为 2n 的数组, 你的任务是将这些数分成 n 对, 例如 (a1, b1), (a2, b2), ..., (an, bn) ，使得从1 到 n 的 min(ai, bi) 总和最大。
+//    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/array-partition-i
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public int arrayPairSum(int[] nums) {
+        Arrays.sort(nums);
+        Long a = IntStream.range(0, nums.length)
+                .filter(i -> i % 2 != 0)
+                .mapToLong(i -> nums[i]).sum();
+        return a.intValue();
+    }
+
+    //给定一个按非递减顺序排序的整数数组 A，返回每个数字的平方组成的新数组，要求也按非递减顺序排序。
+    //https://leetcode-cn.com/problems/squares-of-a-sorted-array/
+    public int[] sortedSquares(int[] A) {
+        return Arrays.stream(A).mapToLong(n -> n * n).boxed().sorted().mapToInt(Long::intValue).toArray();
+    }
+
+    //给定一个按非递减顺序排序的整数数组 A，返回每个数字的平方组成的新数组，要求也按非递减顺序排序。
+    //https://leetcode-cn.com/problems/squares-of-a-sorted-array/
+    public static int[] sortedSquares1(int[] A) {
+        int left = 0;
+        int right = A.length - 1;
+        int[] temp = new int[A.length];
+        int currentIndex = right;
+        while (left <= right) {
+            if (Math.abs(A[left]) <= Math.abs(A[right])) {
+                temp[currentIndex--] = (int) Math.pow(A[right], 2);
+                right--;
+            } else {
+                temp[currentIndex--] = (int) Math.pow(A[left], 2);
+                left++;
+            }
+        }
+        return temp;
+    }
+
+    //    面试题 16.07. 最大数值
+//    编写一个方法，找出两个数字a和b中最大的那一个。不得使用if-else或其他比较运算符。
+    //https://leetcode-cn.com/problems/maximum-lcci/
+    public static int maximum(int a, int b) {
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        map.put(a, a);
+        map.put(b, b);
+        return map.firstKey();
     }
 }

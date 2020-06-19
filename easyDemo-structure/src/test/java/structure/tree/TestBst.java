@@ -96,7 +96,12 @@ public class TestBst {
 //        Arrays.stream(sortedSquares1(a)).boxed().forEach(System.out::println);
 //        System.out.println(missingNumber(a));
 //        System.out.println(maxScoreSightseeingPair(a));
-        System.out.println(maximum(1,2));
+//        System.out.println(maximum(1, 2));
+//        String s = "0P";
+//        System.out.println(isPalindrome(s));
+        String num = "Let's take LeetCode contest";
+
+
     }
 
 
@@ -1035,5 +1040,59 @@ public class TestBst {
         map.put(a, a);
         map.put(b, b);
         return map.firstKey();
+    }
+
+
+    //    给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。
+//    说明：本题中，我们将空字符串定义为有效的回文串。
+//    https://leetcode-cn.com/problems/valid-palindrome/
+    public static boolean isPalindrome(String s) {
+        int left = 0, right = s.length() - 1;
+        while (left <= right) {
+            char a = s.charAt(left);
+            char b = s.charAt(right);
+            //不为数字,大小写字母
+            if (!(a >= 48 && a <= 57 || a >= 65 && a <= 90 || a >= 97 && a <= 122)) {
+                left++;
+                continue;
+            }
+            //不为数字,大小写字母
+            if (!(b >= 48 && b <= 57 || b >= 65 && b <= 90 || b >= 97 && b <= 122)) {
+                right--;
+                continue;
+            }
+            if (Character.toUpperCase(a) != Character.toUpperCase(b)) {
+                return Boolean.FALSE;
+            } else {
+                left++;
+                right--;
+            }
+        }
+        return Boolean.TRUE;
+    }
+
+    //给定一个字符串，你需要反转字符串中每个单词的字符顺序，同时仍保留空格和单词的初始顺序。
+    //https://leetcode-cn.com/problems/reverse-words-in-a-string-iii/
+    public static String reverseWords(String s) {
+        StringBuilder result = new StringBuilder();
+        for (String x : s.split(" ")) {
+            if (result.length() != 0) {
+                result.append(" ");
+            }
+            result.append(new StringBuilder(x).reverse());
+        }
+        return result.toString();
+    }
+
+
+//    我们把符合下列属性的数组 A 称作山脉：
+//    A.length >= 3
+//    存在 0 < i < A.length - 1 使得A[0] < A[1] < ... A[i-1] < A[i] > A[i+1] > ... > A[A.length - 1]
+//    给定一个确定为山脉的数组，返回任何满足 A[0] < A[1] < ... A[i-1] < A[i] > A[i+1] > ... > A[A.length - 1] 的 i 的值。
+//    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/peak-index-in-a-mountain-array
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static int peakIndexInMountainArray(int[] A) {
+        return 0;
     }
 }

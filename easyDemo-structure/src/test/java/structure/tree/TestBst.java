@@ -100,7 +100,7 @@ public class TestBst {
 //        String s = "0P";
 //        System.out.println(isPalindrome(s));
         String num = "Let's take LeetCode contest";
-
+        sortString("eaimykhkgxr");
 
     }
 
@@ -1085,7 +1085,7 @@ public class TestBst {
     }
 
 
-//    我们把符合下列属性的数组 A 称作山脉：
+    //    我们把符合下列属性的数组 A 称作山脉：
 //    A.length >= 3
 //    存在 0 < i < A.length - 1 使得A[0] < A[1] < ... A[i-1] < A[i] > A[i+1] > ... > A[A.length - 1]
 //    给定一个确定为山脉的数组，返回任何满足 A[0] < A[1] < ... A[i-1] < A[i] > A[i+1] > ... > A[A.length - 1] 的 i 的值。
@@ -1093,6 +1093,93 @@ public class TestBst {
 //    链接：https://leetcode-cn.com/problems/peak-index-in-a-mountain-array
 //    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
     public static int peakIndexInMountainArray(int[] A) {
-        return 0;
+        int left = 0, right = A.length - 1;
+        while (left <= right) {
+            int mid = (left + right) >> 1;
+            //如果中点前一个山峰高度<=中点且它小于后一个,说明在右边
+            if (A[mid - 1] <= A[mid] && A[mid] <= A[mid + 1]) {
+                left = mid + 1;
+                //如果中点前一个山峰高度<=中点且它小于后一个,说明在右边
+            } else if (A[mid - 1] >= A[mid] && A[mid] >= A[mid + 1]) {
+                right = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+        return left;
+    }
+
+//    给你一个字符串 s ，请你根据下面的算法重新构造字符串：
+//    从 s 中选出 最小 的字符，将它 接在 结果字符串的后面。
+//    从 s 剩余字符中选出 最小 的字符，且该字符比上一个添加的字符大，将它 接在 结果字符串后面。
+//    重复步骤 2 ，直到你没法从 s 中选择字符。
+//    从 s 中选出 最大 的字符，将它 接在 结果字符串的后面。
+//    从 s 剩余字符中选出 最大 的字符，且该字符比上一个添加的字符小，将它 接在 结果字符串后面。
+//    重复步骤 5 ，直到你没法从 s 中选择字符。
+//    重复步骤 1 到 6 ，直到 s 中所有字符都已经被选过。
+//    在任何一步中，如果最小或者最大字符不止一个 ，你可以选择其中任意一个，并将其添加到结果字符串。
+//    请你返回将 s 中字符重新排序后的 结果字符串 。
+//    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/increasing-decreasing-string
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+//    输入：s = "aaaabbbbcccc"
+//    输出："abccbaabccba"
+//    解释：第一轮的步骤 1，2，3 后，结果字符串为 result = "abc"
+//    第一轮的步骤 4，5，6 后，结果字符串为 result = "abccba"
+//    第一轮结束，现在 s = "aabbcc" ，我们再次回到步骤 1
+//    第二轮的步骤 1，2，3 后，结果字符串为 result = "abccbaabc"
+//    第二轮的步骤 4，5，6 后，结果字符串为 result = "abccbaabccba"
+//
+//    输入：s = "leetcode"
+//    输出："cdelotee"
+
+    //    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/increasing-decreasing-string
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static String sortString(String s) {
+//        StringBuilder sb = new StringBuilder();
+//        int[] alphabet = new int['z' - 'a' + 2];
+//        //算出每个字母出现的次数
+//        for (char c : s.toCharArray())
+//            alphabet[c - 'a' + 1]++;
+//        int i = 0, n = 1;
+//        boolean b = Boolean.TRUE;
+//        while (i < s.length()) {
+//            //获取第一位
+//            if (alphabet[n] > 0) {
+//                char a = (char) (n + 'a' - 1);
+//                sb.append(a);
+//                alphabet[n]--;
+//                i++;
+//            }
+//            if (n == 25) {
+//                b = Boolean.FALSE;
+//            }
+//            if (n == 0) {
+//                b = Boolean.TRUE;
+//            }
+//            n += b ? 1 : -1;
+//        }
+//        return sb.toString();
+        StringBuilder sb = new StringBuilder();
+        int[] alphabet = new int[28];
+        for (char c : s.toCharArray())
+            alphabet[c - 'a' + 1]++;
+        int i = 0, n = 1;
+        boolean b = true;
+        while (i < s.length()) {
+            if (alphabet[n] > 0) {
+                sb.append((char) (n + 'a' - 1));
+                alphabet[n]--;
+                i++;
+            }
+            if (n == 27)
+                b = false;
+            if (n == 0)
+                b = true;
+            n += b ? 1 : -1;
+        }
+        return sb.toString();
     }
 }

@@ -99,9 +99,19 @@ public class TestBst {
 //        System.out.println(maximum(1, 2));
 //        String s = "0P";
 //        System.out.println(isPalindrome(s));
-        String num = "Let's take LeetCode contest";
-        sortString("eaimykhkgxr");
+//        String num = "Let's take LeetCode contest";
+//        sortString("eaimykhkgxr");
 
+//        int[] nums = {-1, 2, 1, -4};
+//        int target = 1;
+//        System.out.println(threeSumClosest(nums, target));
+
+        Integer a = 1111111;
+        Integer b = 2222222;
+        a ^= b;
+        b ^= a;
+        a ^= b;
+        System.out.println("ssss"+a);
     }
 
 
@@ -1181,5 +1191,58 @@ public class TestBst {
             n += b ? 1 : -1;
         }
         return sb.toString();
+    }
+
+    //    给定一个包括 n 个整数的数组 nums 和 一个目标值 target。找出 nums 中的三个整数，使得它们的和与 target 最接近。返回这三个数的和。假定每组输入只存在唯一答案。
+//    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/3sum-closest
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int ans = nums[0] + nums[1] + nums[2];
+        for (int i = 0; i < nums.length; i++) {
+            int start = i + 1, end = nums.length - 1;
+            while (start < end) {
+                int sum = nums[start] + nums[end] + nums[i];
+                if (Math.abs(target - sum) < Math.abs(target - ans))
+                    ans = sum;
+                if (sum > target)
+                    end--;
+                else if (sum < target)
+                    start++;
+                else
+                    return ans;
+            }
+        }
+        return ans;
+    }
+
+    //给定两个数组，编写一个函数来计算它们的交集
+    //https://leetcode-cn.com/problems/intersection-of-two-arrays/
+    public static int[] intersection(int[] nums1, int[] nums2) {
+//        List<Integer> result = new LinkedList<>();
+//        Map<Integer, Integer> integerIntegerMap = Arrays.stream(nums1).boxed().collect(Collectors.toSet(n -> n, n -> 1));
+//        for (int i = 0; i < nums2.length; i++) integerIntegerMap.put(nums2[i], 2);
+//        integerIntegerMap.forEach((k, v) -> {
+//            if (v == 2) result.add(k);
+//        });
+//        return result.stream().mapToInt(Integer::valueOf).toArray();
+        return null;
+    }
+
+    //    编写一个函数，其作用是将输入的字符串反转过来。输入字符串以字符数组 char[] 的形式给出。
+//    不要给另外的数组分配额外的空间，你必须原地修改输入数组、使用 O(1) 的额外空间解决这一问题。
+//    你可以假设数组中的所有字符都是 ASCII 码表中的可打印字符。
+//    来源：力扣（LeetCode）
+//    链接：https://leetcode-cn.com/problems/reverse-string
+//    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+    public static void reverseString(char[] s) {
+        int n = s.length;
+        for (int i = 0; i < n / 2; ++i) {
+            int j = n - 1 - i;
+            s[i] ^= s[j];
+            s[j] ^= s[i];
+            s[i] ^= s[j];
+        }
     }
 }

@@ -28,5 +28,8 @@ public class TestArray {
         }
         System.out.println("arrLength remove=" + intArr.getLimit());
         System.out.println(intArr);
+
+        Integer cc = null;
+
     }
 }

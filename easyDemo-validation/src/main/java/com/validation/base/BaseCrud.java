@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2020/12/18 11:34 上午
  * @version: 1.0.0
  **/
-@RestController
 public interface BaseCrud<T, S> {
 
     /**
@@ -28,7 +27,7 @@ public interface BaseCrud<T, S> {
      * @updateTime: 2020/12/18 11:44 上午
      */
     @GetMapping("{id}")
-    R selectOne(@Validated S s);
+    R selectOne(@PathVariable String id);
 
     /**
      * @description: 新增单条数据

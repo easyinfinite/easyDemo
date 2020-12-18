@@ -2,7 +2,7 @@ package com.validation.controller;
 
 import com.validation.constant.ErrorCode;
 import com.validation.constant.ResultUtil;
-import com.validation.entity.User;
+import com.validation.entity.user.User;
 import com.validation.exception.BusinessException;
 import com.validation.result.R;
 import com.validation.valiNote.group.App;

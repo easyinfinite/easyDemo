@@ -54,4 +54,10 @@ public class ValidationController {
     public R getUser(@Validated User user) {
         return ResultUtil.data(user);
     }
+
+    @PostMapping(value = "save4")
+    @ResponseBody
+    public R getUser1(@RequestBody String s) {
+        return ResultUtil.data(s);
+    }
 }

@@ -19,7 +19,7 @@ public interface BaseCrud<T, S> {
      * @updateTime: 2020/12/18 11:40 上午
      */
     @GetMapping
-    R selectList(@Validated S s);
+    R selectList(@Validated @ModelAttribute S s);
 
     /**
      * @description: 根据id查询单条数据

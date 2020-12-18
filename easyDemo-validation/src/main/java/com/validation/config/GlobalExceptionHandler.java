@@ -4,9 +4,11 @@ import com.validation.constant.ResultUtil;
 import com.validation.exception.BusinessException;
 import com.validation.result.R;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -133,6 +135,31 @@ public class GlobalExceptionHandler {
         log.error("ServletRequestBindingException RequestURI:{},{}", req.getRequestURI(), e.getMessage());
         return ResultUtil.error(400, e.getMessage());
     }
+
+    /**
+     * @description: 客户端使用错误的Content-Type调用
+     * @author: chenyunxuan
+     * @updateTime: 2020/12/18 2:20 下午
+     */
+    @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
+    @ResponseBody
+    public R ServletRequestBindingExceptionHandler(HttpServletRequest req, HttpMediaTypeNotSupportedException e) {
+        log.error("HttpMediaTypeNotSupportedException RequestURI:{},{}", req.getRequestURI(), e.getMessage());
+        return ResultUtil.error(400,"错误的Content-Type");
+    }
+
+    /**
+     * @description: 当接收入参为requestBody时传入空值
+     * @author: chenyunxuan
+     * @updateTime: 2020/12/18 2:20 下午
+     */
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    @ResponseBody
+    public R ServletRequestBindingExceptionHandler(HttpServletRequest req, HttpMessageNotReadableException e) {
+        log.error("HttpMessageNotReadableException RequestURI:{},{}", req.getRequestURI(), e.getMessage());
+        return ResultUtil.error(400,"请求body为空");
+    }
+
 
     /**
      * @description: 处理其他异常记录

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2020/12/18 11:34 上午
  * @version: 1.0.0
  **/
+@RestController
 public interface BaseCrud<T, S> {
 
     /**

@@ -35,6 +35,8 @@
         <hutool.version>5.0.0</hutool.version>
         <guava.version>28.1-jre</guava.version>
         <user.agent.version>1.20</user.agent.version>
+        <aliyun.fastjson.version>1.2.58</aliyun.fastjson.version>
+        <reactor.core.version>3.3.0.RELEASE</reactor.core.version>
     </properties>
 
     <dependencyManagement>
@@ -97,6 +99,16 @@
                 <artifactId>lombok</artifactId>
                 <version>1.18.4</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
+                <version>${reactor.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${aliyun.fastjson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

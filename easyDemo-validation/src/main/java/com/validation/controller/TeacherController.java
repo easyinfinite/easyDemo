@@ -2,7 +2,9 @@ package com.validation.controller;
 
 import com.validation.base.BaseController;
 import com.validation.base.BaseCrud;
+import com.validation.constant.ResultUtil;
 import com.validation.entity.teacher.Teacher;
+import com.validation.entity.teacher.TeacherDo;
 import com.validation.entity.teacher.TeacherSearch;
 import com.validation.result.R;
 import org.springframework.validation.annotation.Validated;
@@ -23,26 +25,30 @@ public class TeacherController extends BaseController implements BaseCrud<Teache
 
     @Override
     public R selectList(TeacherSearch teacherSearch) {
-        return null;
+        return ResultUtil.success("成功");
     }
 
     @Override
     public R selectOne(String id) {
-        return null;
+        return ResultUtil.success("成功");
     }
 
     @Override
     public R add(Teacher teacher) {
-        return null;
+        //转换为数据库操作对象
+        TeacherDo userDo = copyToDo(teacher, TeacherDo.builder().build());
+        return ResultUtil.success("成功");
     }
 
     @Override
     public R upp(String id, Teacher teacher) {
-        return null;
+        //转换为数据库操作对象
+        TeacherDo userDo = copyToDo(teacher, TeacherDo.builder().build());
+        return ResultUtil.success("成功");
     }
 
     @Override
     public R del(String id) {
-        return null;
+        return ResultUtil.success("成功");
     }
 }

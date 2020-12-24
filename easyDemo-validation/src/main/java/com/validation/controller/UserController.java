@@ -23,6 +23,7 @@ public class UserController extends BaseController implements BaseCrud<User, Use
 
     @Override
     public R selectList(UserSearch userSearch) {
+        request.getRequestURI();
         return null;
     }
 

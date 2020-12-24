@@ -1,6 +1,8 @@
 package com.validation.base;
 
 import com.validation.result.R;
+import com.validation.valiNote.group.Add;
+import com.validation.valiNote.group.Upp;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +37,7 @@ public interface BaseCrud<T, S> {
      * @updateTime: 2020/12/18 1:39 下午
      */
     @PostMapping
-    R add(@RequestBody T t);
+    R add(@Validated(value = Add.class) @RequestBody T t);
 
     /**
      * @description: 修改单条数据
@@ -43,7 +45,7 @@ public interface BaseCrud<T, S> {
      * @updateTime: 2020/12/18 1:39 下午
      */
     @PutMapping("{id}")
-    R upp(@PathVariable String id, @RequestBody T t);
+    R upp(@PathVariable String id, @Validated(value = Upp.class) @RequestBody T t);
 
     /**
      * @description: 删除单条数据

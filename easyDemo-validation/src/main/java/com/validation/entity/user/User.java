@@ -1,7 +1,7 @@
 package com.validation.entity.user;
 
-import com.validation.valiNote.group.App;
-import com.validation.valiNote.group.Pc;
+import com.validation.valiNote.group.Add;
+import com.validation.valiNote.group.Upp;
 import com.validation.valiNote.mobile.MobileVail;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -45,10 +45,10 @@ public class User {
      * @author: chenyunxuan
      * @updateTime: 2019-12-18 17:30
      */
-    @MobileVail(groups = {Pc.class})
+    @MobileVail(groups = {Upp.class})
     private String mobile;
 
-    @Size(min = 2, max = 30, groups = {App.class,Pc.class})
+    @Size(min = 2, max = 30, groups = {Add.class, Upp.class})
     private String name;
 
     /**

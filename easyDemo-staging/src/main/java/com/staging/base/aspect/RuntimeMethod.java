@@ -56,18 +56,16 @@ public class RuntimeMethod {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (null != requestAttributes) {
             loadingThreadLocal(requestAttributes, joinPoint.getArgs());
-            if (!threadLocal.get().getT2().contains("/event")) {
-                log.info("-in- {} {} -{}",
-                        threadLocal.get().getT1(),
-                        threadLocal.get().getT2(),
-                        threadLocal.get().getT6());
-                log.info("Method arguments:{} -{}",
-                        threadLocal.get().getT3(),
-                        threadLocal.get().getT6());
-                log.info("Request header:{} -{}",
-                        threadLocal.get().getT4(),
-                        threadLocal.get().getT6());
-            }
+            log.info("-in- {} {} -{}",
+                    threadLocal.get().getT1(),
+                    threadLocal.get().getT2(),
+                    threadLocal.get().getT6());
+            log.info("Method arguments:{} -{}",
+                    threadLocal.get().getT3(),
+                    threadLocal.get().getT6());
+            log.info("Request header:{} -{}",
+                    threadLocal.get().getT4(),
+                    threadLocal.get().getT6());
         }
     }
 
@@ -81,15 +79,12 @@ public class RuntimeMethod {
      */
     @Around("aopPoint()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-        //获取参数，如果是零元购，设置标识
-        Boolean zeroGoodsFlag = false;
-        Object[] args = joinPoint.getArgs();
         // 调用目标方法
         Object result = joinPoint.proceed();
         String requestUrl = threadLocal.get().getT2();
         log.info("-out- {} return:{} -time:{}ms -{}", requestUrl, JSONObject.toJSONString(result), System.currentTimeMillis() - threadLocal.get().getT5(), threadLocal.get().getT6());
         //接口出参处理
-        return delReturnData(result, zeroGoodsFlag);
+        return delReturnData(result);
     }
 
 
@@ -121,7 +116,7 @@ public class RuntimeMethod {
      * @author: chenyunxuan
      * @updateTime: 2020/8/4 11:27 上午
      */
-    private Object delReturnData(Object result, Boolean zeroGoodsFlag) {
+    private Object delReturnData(Object result) {
         threadLocal.remove();
         return result;
     }

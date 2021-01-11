@@ -337,4 +337,17 @@ public class Bst<E extends Comparable<E>> {
         return sb.toString();
     }
 
+
+    public static int numberOfMatches(int n) {
+        int count = 0;
+        while (n != 1) {
+            n = (n >> 1);
+            count += n;
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(numberOfMatches(14));
+    }
 }

@@ -12,6 +12,7 @@
         <module>easyDemo-validation</module>
         <module>easyDemo-lambda</module>
         <module>easyDemo-admin</module>
+        <module>easyDemo-netty</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -39,10 +40,17 @@
         <aliyun.fastjson.version>1.2.58</aliyun.fastjson.version>
         <reactor.core.version>3.3.0.RELEASE</reactor.core.version>
         <spring.admin.version>2.2.4</spring.admin.version>
+        <netty.version>4.1.58.Final</netty.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
             <!--springAdmin监控-->
             <dependency>
                 <groupId>de.codecentric</groupId>

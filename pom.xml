@@ -13,6 +13,7 @@
         <module>easyDemo-lambda</module>
         <module>easyDemo-admin</module>
         <module>easyDemo-netty</module>
+        <module>easyDemo-springmvc</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

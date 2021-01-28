@@ -1,9 +1,7 @@
 package com.spring.framework.servlet;
 
-import com.spring.framework.annotation.DemoAutowired;
-import com.spring.framework.annotation.DemoController;
-import com.spring.framework.annotation.DemoRequestMapping;
-import com.spring.framework.annotation.DemoService;
+import com.spring.framework.annotation.*;
+import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 
 import javax.servlet.ServletConfig;
@@ -14,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.*;
@@ -62,15 +62,66 @@ public class EasyDispatcherServlet extends HttpServlet {
         this.doPost(req, resp);
     }
 
+    @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doSomething(req,resp);
+        doSomething(req, resp);
     }
 
-    private void doSomething(HttpServletRequest req, HttpServletResponse resp) {
-        log.info(req.getRequestURI()+"xxxxxxxxxxxxxx");
-        log.info(req.getRequestURI()+"xxxxxxxxxxxxxx");
-        log.info(req.getRequestURI()+"xxxxxxxxxxxxxx");
+    private void doSomething(HttpServletRequest req, HttpServletResponse resp) throws IOException, InvocationTargetException, IllegalAccessException {
+        String url = req.getRequestURI();
+        if (!this.mappingHandler.containsKey(url)) {
+            resp.getWriter().write("404 not found!!!");
+            return;
+        }
+        Method method = mappingHandler.get(url);
+        //拿到方法的入参,建立参数名称与位置的关系
+        Map<String, Integer> paramIndexMapping = new HashMap<>();
+        Annotation[][] annotations = method.getParameterAnnotations();
+        for (int i = 0; i < annotations.length; i++) {
+            for (Annotation annotation : annotations[i]) {
+                //找到被注解修饰的入参,保存位置关系到数组中
+                if (annotation instanceof DemoRequestParam) {
+                    String paramName = ((DemoRequestParam) annotation).value();
+                    if (!"".equals(paramName.trim())) {
+                        paramIndexMapping.put(paramName, i);
+                    }
+                }
+            }
+        }
+
+        //有一些参数并没有被注解修饰,需要特殊处理
+        Class<?>[] clazzArray = method.getParameterTypes();
+        for (int i = 0; i < clazzArray.length; i++) {
+            Class<?> clazz = clazzArray[i];
+            if (clazz == HttpServletRequest.class || clazz == HttpServletResponse.class) {
+                paramIndexMapping.put(clazz.getName(), i);
+            }
+        }
+
+        //传入的参数列表
+        Map<String, String[]> parmers = req.getParameterMap();
+        //动态绑定参数
+        Object[] paramValues = new Object[clazzArray.length];
+        parmers.forEach((k, v) -> {
+            String value = Arrays.toString(v).replaceAll("\\[|\\]", "").replaceAll("\\s", "");
+            if (!paramIndexMapping.containsKey(k)) return;
+            int index = paramIndexMapping.get(k);
+            paramValues[index] = value;
+        });
+
+        //特殊处理req和roq
+        if (paramIndexMapping.containsKey(HttpServletResponse.class.getName())) {
+            int index = paramIndexMapping.get(HttpServletResponse.class.getName());
+            paramValues[index] = resp;
+        }
+        if (paramIndexMapping.containsKey(HttpServletRequest.class.getName())) {
+            int index = paramIndexMapping.get(HttpServletRequest.class.getName());
+            paramValues[index] = req;
+        }
+
+        String branchName = toLowerFirstCase(method.getDeclaringClass().getSimpleName());
+        method.invoke(ioc.get(branchName), paramValues);
     }
 
     @Override
@@ -108,7 +159,7 @@ public class EasyDispatcherServlet extends HttpServlet {
                 StringJoiner stringJoiner = new StringJoiner("/");
                 stringJoiner.add(finalBaseUrl);
                 stringJoiner.add(url);
-                mappingHandler.put(stringJoiner.toString().replace("/+", "/"), item);
+                mappingHandler.put(stringJoiner.toString().replaceAll("/+", "/"), item);
                 log.info("url:+" + url + " ---->" + item);
             });
         });

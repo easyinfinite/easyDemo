@@ -22,4 +22,9 @@ public class SysConfig {
     public BeanInitProcess getBeanInitProcessInstance() {
         return new BeanInitProcess();
     }
+
+    @Bean(value = "BeanInitProcessNew",initMethod = "initBeanMethod", destroyMethod = "destroyBeanMethod")
+    public BeanInitProcess getBeanInitProcessInstance1() {
+        return new BeanInitProcess("啊哈哈哈哈");
+    }
 }

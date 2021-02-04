@@ -21,6 +21,10 @@ public class BeanInitProcess implements InitializingBean, DisposableBean {
         log.info("进入构造方法");
     }
 
+    public BeanInitProcess(String name) {
+        log.info("进入有参方法");
+    }
+
     static {
         log.info("进入静态代码块");
     }

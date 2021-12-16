@@ -1,5 +1,6 @@
 package com.validation.controller;
 
+import com.core.redis.cache.CacheClient;
 import com.validation.base.BaseController;
 import com.validation.base.BaseCrud;
 import com.validation.constant.ResultUtil;
@@ -10,6 +11,8 @@ import com.validation.result.R;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * @ClassName: TeacherController
@@ -23,8 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class TeacherController extends BaseController implements BaseCrud<Teacher, TeacherSearch> {
 
+    @Resource
+    CacheClient cacheClient;
+
     @Override
     public R selectList(TeacherSearch teacherSearch) {
+        cacheClient.demo();
+        System.out.println(cacheClient.demo2());
         return ResultUtil.success("成功");
     }
 

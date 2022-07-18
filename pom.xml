@@ -39,7 +39,7 @@
         <hutool.version>5.0.0</hutool.version>
         <guava.version>28.1-jre</guava.version>
         <user.agent.version>1.20</user.agent.version>
-        <aliyun.fastjson.version>1.2.58</aliyun.fastjson.version>
+        <aliyun.fastjson.version>1.2.83</aliyun.fastjson.version>
         <reactor.core.version>3.3.0.RELEASE</reactor.core.version>
         <spring.admin.version>2.2.4</spring.admin.version>
         <netty.version>4.1.58.Final</netty.version>

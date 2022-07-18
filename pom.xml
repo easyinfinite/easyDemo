@@ -16,6 +16,7 @@
         <module>easyDemo-springmvc</module>
         <module>easyDemo-debris</module>
         <module>easyDemo-core</module>
+        <module>easyDemo-mybatis</module>
         <module>easyDemo-shardingsphere</module>
     </modules>
     <parent>

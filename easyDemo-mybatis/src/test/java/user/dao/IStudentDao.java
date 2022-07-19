@@ -1,4 +1,4 @@
-package com.mybatis.dao;
+package user.dao;
 
 /**
  * @ClassName:IUserDao
@@ -7,7 +7,7 @@ package com.mybatis.dao;
  * @Date: 2022/7/18 11:25 AM
  * @version: 1.0.0
  **/
-public interface IUserDao {
+public interface IStudentDao {
 
     /**
      * 查询用户名称
@@ -15,7 +15,7 @@ public interface IUserDao {
      * @author: chenyunxuan
      * @updateTime: 2022/7/18 11:25 AM
      */
-    public String selectUserName();
+    public String selectUserName(String id);
 
     /**
      * 查询用户密码
@@ -23,5 +23,5 @@ public interface IUserDao {
      * @author: chenyunxuan
      * @updateTime: 2022/7/18 11:25 AM
      */
-    public String selectPassword();
+    public String selectPassword(String id);
 }

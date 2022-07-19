@@ -1,11 +1,12 @@
-import com.mybatis.bind.MapperProxyFactory;
-import com.mybatis.dao.IUserDao;
+import com.mybatis.binding.MapperRegistry;
+import business.dao.IUserDao;
+import com.mybatis.session.SqlSession;
+import com.mybatis.session.SqlSessionFactory;
+import com.mybatis.session.defaults.DefaultSqlSessionFactory;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Test;
 
 import java.lang.reflect.Proxy;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -23,20 +24,22 @@ public class ApiTest {
         IUserDao iUserDao = (IUserDao) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
                 new Class[]{IUserDao.class},
                 (a, b, c) -> "我被代理了");
-        String s = iUserDao.selectUserName();
+        String s = iUserDao.selectUserName("1");
         System.out.println(s);
     }
 
     @Test
     public void Test1() {
-        MapperProxyFactory<IUserDao> factory = new MapperProxyFactory<>(IUserDao.class);
-        Map<String, String> sqlSession = new HashMap<>();
-
-        sqlSession.put("com.mybatis.dao.IUserDao.selectUserName", "模拟执行 Mapper.xml 中 SQL 语句的操作：查询用户姓名");
-        sqlSession.put("com.mybatis.dao.IUserDao.selectPassword", "模拟执行 Mapper.xml 中 SQL 语句的操作：查询用户年龄");
-        IUserDao userDao = factory.newInstance(sqlSession);
-
-        String res = userDao.selectUserName();
+        //注册
+        MapperRegistry registry = new MapperRegistry();
+        registry.addMappers("business.dao");
+        // 2. 从 SqlSession 工厂获取 Session
+        SqlSessionFactory sqlSessionFactory = new DefaultSqlSessionFactory(registry);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        // 3. 获取映射器对象
+        IUserDao userDao = sqlSession.getMapper(IUserDao.class);
+        // 4. 测试验证
+        String res = userDao.selectUserName("111");
         log.info("测试结果：{}", res);
     }
 }
